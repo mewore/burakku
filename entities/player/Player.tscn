@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://entities/player/Player.cs" type="Script" id=1]
+[ext_resource path="res://entities/player/states/PlayerActive.cs" type="Script" id=2]
+[ext_resource path="res://entities/StateMachine.cs" type="Script" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 8.0
@@ -16,3 +18,9 @@ shape = SubResource( 1 )
 
 [node name="MaxJumpHeight" type="Position2D" parent="."]
 position = Vector2( 0, -64 )
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="Active" type="Node" parent="StateMachine"]
+script = ExtResource( 2 )

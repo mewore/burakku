@@ -46,18 +46,16 @@ public class Vamp : Player
         hpBar = GetNode<LineBar>("HpBar");
     }
 
-    public override void _PhysicsProcess(float delta)
+    public float CheckForDamage(float delta)
     {
-        base._PhysicsProcess(delta);
-
         foreach (BlacklightSource blacklightSource in blacklightSources)
         {
             var squaredDistanceToTarget = blacklightSource.GlobalPosition.DistanceSquaredTo(GlobalPosition);
             if (squaredDistanceToTarget < squaredRadius)
             {
-                // Die
-                GetTree().ReloadCurrentScene();
-                return;
+                // Instant death
+                hp = -1f;
+                continue;
             }
             var angleToCenter = blacklightSource.GlobalPosition.AngleToPoint(GlobalPosition);
             var angleVariation = Mathf.Atan2(radius, Mathf.Sqrt(squaredDistanceToTarget - squaredRadius));
@@ -80,21 +78,25 @@ public class Vamp : Player
             }
         }
 
-        if (pendingHitAngles.Count > 0)
-        {
-            hp -= pendingHitAngles.Count * HP_LOST_PER_HIT_PER_SECOND * delta;
-            hpBar.Value = hp;
-            if (hp < 0f)
-            {
-                GetTree().ReloadCurrentScene();
-            }
-        }
+        hp -= pendingHitAngles.Count * HP_LOST_PER_HIT_PER_SECOND * delta;
+        hpBar.Value = hp;
+        hpBar.Visible = hp > 0f && hp < 1f;
 
         lastHitAngles = pendingHitAngles;
         pendingHitAngles = new List<float>();
+
+        return hp;
     }
 
-    public override void _Process(float delta)
+    public void ClearFire()
+    {
+        for (int hitIndex = 0; hitIndex < hitFires.Count; hitIndex++)
+        {
+            hitFires[hitIndex].Emitting = false;
+        }
+    }
+
+    public void RenderFire()
     {
         for (int hitIndex = 0; hitIndex < lastHitAngles.Count; hitIndex++)
         {

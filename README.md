@@ -18,7 +18,7 @@ Blacklight" is already taken.~~
 - [x] 💙 Other player (vampire) moving around with [left arrow]/[right arrow] and jumping with [up]
 - [x] 💙 The other player gets hurt by the first player if there is a direct line of sight between them
     - When the other player's HP turns 0, restart the level ([Lose!])
-- [ ] 💙 Instead of immediately restarting the level, turn the other player into particles that fade in slowly, float
+- [x] 💙 Instead of immediately restarting the level, turn the other player into particles that fade in slowly, float
   upwards and fade out
 - [ ] 💙 Button that opens a door
 - [ ] 💙 Stationary blacklights
