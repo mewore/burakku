@@ -5,9 +5,10 @@ public class BlacklightSource : Polygon2D
 {
     const float ANGLE_OFFSET = .001f;
     const float MIN_ANGLE_DIFFERENCE = ANGLE_OFFSET * .5f;
+    const float MIN_SUBDIVISION_ANGLE_DIFFERENCE = .01f;
+    const float MIN_SUBDIVISION_POINT_DISTANCE = .01f;
+    const float MIN_SUBDIVISION_POINT_DISTANCE_SQUARED = MIN_SUBDIVISION_POINT_DISTANCE * MIN_SUBDIVISION_POINT_DISTANCE;
     const float CIRCLE_RESOLUTION = .05f;
-
-    const float LIGHT_OVERLAP = 3f;
 
     private Dictionary<Node2D, Vector2[]> pointsPerNode;
     private Dictionary<Node2D, (Vector2, float)[]> circlesPerNode;
@@ -53,6 +54,10 @@ public class BlacklightSource : Polygon2D
             var children = ((Node)opaqueBodies[bodyIndex]).GetChildren();
             for (int j = 0; j < children.Count; j++)
             {
+                if (!(children[j] is Node2D))
+                {
+                    continue;
+                }
                 var childNode = (Node2D)children[j];
                 if (childNode is CollisionShape2D)
                 {
@@ -151,6 +156,7 @@ public class BlacklightSource : Polygon2D
                 {
                     angles.Add(angle);
                 }
+                // angles.Add(minAngle);
                 angles.Add(maxAngle);
             }
         }
@@ -177,14 +183,90 @@ public class BlacklightSource : Polygon2D
         }
         angles = finalAngles;
 
-        // Now that the angles have been calculated, do the raycasting
-        var newPolygon = Polygon.Length != angles.Count ? new Vector2[angles.Count] : Polygon;
-        for (int angleIndex = 0; angleIndex < angles.Count; angleIndex++)
+        // Do raycasting
+        var anglesWithResults = new List<(float, Vector2, Object, int)>(angles.Count);
+        foreach (float angle in angles)
         {
-            ray.CastTo = new Vector2(rayVector.Rotated(angles[angleIndex]));
-            ray.ForceRaycastUpdate();
-            newPolygon[angleIndex] = ray.IsColliding() ? ToLocal(ray.GetCollisionPoint()) : ray.CastTo;
+            anglesWithResults.Add(castRay(angle));
         }
-        Polygon = newPolygon;
+
+        // If collision shapes intersect, the polygon will be incorrect, so subdivide some angles if necessary
+        var subdividedResult = new List<Vector2>(anglesWithResults.Count);
+        int count = anglesWithResults.Count;
+        for (int angleIndex = 1; angleIndex < count; angleIndex++)
+        {
+            subdividedResult.Add(anglesWithResults[angleIndex - 1].Item2);
+            subdivideAngleIfNecessary(anglesWithResults[angleIndex - 1], anglesWithResults[angleIndex], subdividedResult);
+        }
+        subdividedResult.Add(anglesWithResults[count - 1].Item2);
+        subdivideAngleIfNecessary(anglesWithResults[count - 1], anglesWithResults[0], subdividedResult);
+
+        // Finally, remove any coplanar points because they are useless
+        var withoutCoplanar = new List<Vector2>(subdividedResult.Count);
+        withoutCoplanar.Add(subdividedResult[0]);
+        withoutCoplanar.Add(subdividedResult[1]);
+        for (int angleIndex = 2; angleIndex < subdividedResult.Count; angleIndex++)
+        {
+            if (pointsAreCoplanar(withoutCoplanar[withoutCoplanar.Count - 2], withoutCoplanar[withoutCoplanar.Count - 1], subdividedResult[angleIndex]))
+            {
+                withoutCoplanar[withoutCoplanar.Count - 1] = subdividedResult[angleIndex];
+            }
+            else
+            {
+                withoutCoplanar.Add(subdividedResult[angleIndex]);
+            }
+        }
+
+        Polygon = withoutCoplanar.ToArray();
+    }
+
+    private void subdivideAngleIfNecessary((float, Vector2, Object, int) first, (float, Vector2, Object, int) second, List<Vector2> resultList)
+    {
+        if ((first.Item3 == second.Item3 && first.Item4 == second.Item4) || first.Item2.DistanceSquaredTo(second.Item2) < MIN_SUBDIVISION_POINT_DISTANCE_SQUARED)
+        {
+            return;
+        }
+        var middleAngle = getAngleAverage(first.Item1, second.Item1);
+        if (getAngleDifference(middleAngle, first.Item1) < MIN_SUBDIVISION_ANGLE_DIFFERENCE)
+        {
+            return;
+        }
+        var middle = castRay(middleAngle);
+        if (pointsAreCoplanar(first.Item2, middle.Item2, second.Item2))
+        {
+            return;
+        }
+        subdivideAngleIfNecessary(first, middle, resultList);
+        resultList.Add(middle.Item2);
+        subdivideAngleIfNecessary(middle, second, resultList);
+    }
+
+    private static float getAngleAverage(float first, float second)
+    {
+        return Mathf.Abs(first - second) < Mathf.Pi
+            ? ((first + second) * .5f) % Mathf.Tau
+            : ((first + second + Mathf.Tau) * .5f) % Mathf.Tau;
+    }
+
+    private static float getAngleDifference(float first, float second)
+    {
+        float difference = Mathf.Abs(first - second);
+        return difference < Mathf.Pi
+            ? difference
+            : Mathf.Tau - difference;
+    }
+
+    private (float, Vector2, Object, int) castRay(float angle)
+    {
+        ray.CastTo = new Vector2(rayVector.Rotated(angle));
+        ray.ForceRaycastUpdate();
+        return (angle, ray.IsColliding() ? ToLocal(ray.GetCollisionPoint()) : ray.CastTo, ray.GetCollider(), ray.GetColliderShape());
+    }
+
+    private static bool pointsAreCoplanar(Vector2 first, Vector2 second, Vector2 third)
+    {
+        // If the slopes between two pairs of points are the same, then the 3 points are coplanar
+        // This formula is adjusted so that there is multiplication instead of division
+        return Mathf.Abs((third.y - second.y) * (second.x - first.x) - (second.y - first.y) * (third.x - second.x)) < 0.0001f;
     }
 }
