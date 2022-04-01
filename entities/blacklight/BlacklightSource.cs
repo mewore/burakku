@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class BlacklightSource : Polygon2D
 {
+    private const float ROTATION_SPEED = Mathf.Tau * .5f;
+
     const float ANGLE_OFFSET = .001f;
     const float MIN_ANGLE_DIFFERENCE = ANGLE_OFFSET * .5f;
     const float MIN_SUBDIVISION_ANGLE_DIFFERENCE = .01f;
@@ -18,6 +20,8 @@ public class BlacklightSource : Polygon2D
     private Vector2 rayVector;
     private RayCast2D ray;
 
+    private Node2D subPolygon;
+
     private const int MINIMUM_RAY_COUNT = 4;
     private float[] mandatoryRayAngles = new float[MINIMUM_RAY_COUNT];
 
@@ -30,6 +34,7 @@ public class BlacklightSource : Polygon2D
             mandatoryRayAngles[rayIndex] = currentAngle;
         }
 
+        subPolygon = GetNode<Node2D>("Polygon2D");
         ray = GetNode<RayCast2D>("RayCast2D");
         rayLength = ray.CastTo.Length();
         rayVector = new Vector2(-rayLength, 0f);
@@ -118,6 +123,8 @@ public class BlacklightSource : Polygon2D
 
     public override void _Process(float delta)
     {
+        subPolygon.Rotate(delta * ROTATION_SPEED);
+
         // Make a list of the necessary raycasting angles
         Vector2 globalPosition = GlobalPosition;
         var angles = new List<float>();

@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://entities/player/Blacklight.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/player/vamp/Vamp.tscn" type="PackedScene" id=2]
+[ext_resource path="res://entities/blacklight/BlacklightSource.tscn" type="PackedScene" id=3]
 [ext_resource path="res://entities/door/Door.tscn" type="PackedScene" id=4]
 [ext_resource path="res://entities/button/Button.tscn" type="PackedScene" id=5]
 
@@ -13,6 +14,12 @@ extents = Vector2( 24, 8 )
 
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 256, 8 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 40, 8 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 8, 24 )
 
 [sub_resource type="SegmentShape2D" id=5]
 a = Vector2( -16, 0 )
@@ -26,7 +33,6 @@ b = Vector2( 32, -8 )
 
 [node name="Blacklight" parent="." instance=ExtResource( 1 )]
 position = Vector2( 256, 280 )
-collision_layer = 4
 
 [node name="Vamp" parent="." instance=ExtResource( 2 )]
 position = Vector2( 312, 80 )
@@ -62,6 +68,14 @@ shape = SubResource( 9 )
 position = Vector2( 264, 184 )
 shape = SubResource( 4 )
 
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="World"]
+position = Vector2( 440, 160 )
+shape = SubResource( 10 )
+
+[node name="CollisionShape2D11" type="CollisionShape2D" parent="World"]
+position = Vector2( 440, 256 )
+shape = SubResource( 11 )
+
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="World"]
 position = Vector2( 136, 224 )
 shape = SubResource( 4 )
@@ -76,7 +90,7 @@ shape = SubResource( 5 )
 one_way_collision = true
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="World"]
-position = Vector2( 464, 176 )
+position = Vector2( 440, 192 )
 shape = SubResource( 6 )
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="World"]
@@ -89,3 +103,10 @@ position = Vector2( 312, 216 )
 [node name="Button" parent="." instance=ExtResource( 5 )]
 position = Vector2( 216, 208 )
 target = NodePath("../Door")
+
+[node name="Button3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 464, 280 )
+target = NodePath("../Door")
+
+[node name="BlacklightSource" parent="." instance=ExtResource( 3 )]
+position = Vector2( 312, 120 )
