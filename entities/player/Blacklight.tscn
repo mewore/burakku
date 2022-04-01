@@ -9,4 +9,4 @@ walkRightInputName = "move_right_first"
 jumpInputName = "jump_first"
 
 [node name="BlacklightSource" parent="." index="2" instance=ExtResource( 2 )]
-position = Vector2( 0, -24 )
+position = Vector2( 0, -16 )

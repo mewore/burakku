@@ -1,14 +1,22 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://entities/player/Blacklight.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/player/vamp/Vamp.tscn" type="PackedScene" id=2]
+[ext_resource path="res://entities/door/Door.tscn" type="PackedScene" id=4]
+[ext_resource path="res://entities/button/Button.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 24, 32 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 24, 8 )
 
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 256, 8 )
+
 [sub_resource type="SegmentShape2D" id=5]
 a = Vector2( -16, 0 )
-b = Vector2( 24, -8 )
+b = Vector2( 32, -8 )
 
 [sub_resource type="CircleShape2D" id=6]
 
@@ -17,10 +25,11 @@ b = Vector2( 24, -8 )
 [node name="Level" type="Node2D"]
 
 [node name="Blacklight" parent="." instance=ExtResource( 1 )]
-position = Vector2( 296, 280 )
+position = Vector2( 256, 280 )
+collision_layer = 4
 
 [node name="Vamp" parent="." instance=ExtResource( 2 )]
-position = Vector2( 312, 128 )
+position = Vector2( 312, 80 )
 
 [node name="World" type="StaticBody2D" parent="." groups=[
 "opaque",
@@ -32,25 +41,37 @@ collision_mask = 4
 polygon = PoolVector2Array( 32, 280, 480, 280, 480, 0, 512, 0, 512, 312, 0, 312, 0, 0, 32, 0 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="World"]
-polygon = PoolVector2Array( 344, 280, 368, 248, 392, 280 )
+polygon = PoolVector2Array( 344, 280, 360, 248, 376, 248, 392, 280 )
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="World"]
 polygon = PoolVector2Array( 216, 280, 176, 272, 144, 256, 112, 224, 96, 192, 32, 192, 32, 280 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World"]
-position = Vector2( 296, 224 )
-shape = SubResource( 4 )
+position = Vector2( 312, 184 )
+shape = SubResource( 8 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="World"]
 position = Vector2( 216, 216 )
 shape = SubResource( 4 )
 
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="World"]
+position = Vector2( 256, -8 )
+shape = SubResource( 9 )
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="World"]
+position = Vector2( 264, 184 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="World"]
+position = Vector2( 136, 224 )
+shape = SubResource( 4 )
+
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="World"]
-position = Vector2( 312, 136 )
+position = Vector2( 312, 88 )
 shape = SubResource( 4 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="World"]
-position = Vector2( 424, 224 )
+position = Vector2( 352, 176 )
 shape = SubResource( 5 )
 one_way_collision = true
 
@@ -61,3 +82,10 @@ shape = SubResource( 6 )
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="World"]
 position = Vector2( 392, 160 )
 shape = SubResource( 7 )
+
+[node name="Door" parent="." instance=ExtResource( 4 )]
+position = Vector2( 312, 216 )
+
+[node name="Button" parent="." instance=ExtResource( 5 )]
+position = Vector2( 216, 208 )
+target = NodePath("../Door")

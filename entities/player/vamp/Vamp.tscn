@@ -82,7 +82,7 @@ tracks/2/keys = {
 [node name="Vamp" groups=[
 "vampire",
 ] instance=ExtResource( 1 )]
-collision_layer = 12
+collision_layer = 28
 script = ExtResource( 2 )
 walkLeftInputName = "move_left_second"
 walkRightInputName = "move_right_second"
@@ -90,10 +90,10 @@ jumpInputName = "jump_second"
 hitFireScene = ExtResource( 3 )
 
 [node name="Center" type="Position2D" parent="." index="2"]
-position = Vector2( 0, -16 )
+position = Vector2( 0, -12 )
 
 [node name="Top" type="Position2D" parent="." index="3"]
-position = Vector2( 0, -32 )
+position = Vector2( 0, -24 )
 
 [node name="DamageRay" type="RayCast2D" parent="." index="4"]
 exclude_parent = false

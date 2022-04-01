@@ -20,8 +20,9 @@ Blacklight" is already taken.~~
     - When the other player's HP turns 0, restart the level ([Lose!])
 - [x] 💙 Instead of immediately restarting the level, turn the other player into particles that fade in slowly, float
   upwards and fade out
-- [ ] 💙 Button that opens a door
+- [x] 💙 Button that opens a door
 - [ ] 💙 Stationary blacklights
+- [ ] 💙 Button that disables a blacklight
 - [ ] 💙 Door where if a character goes, they exit the level and can reappear with [Jump]
 - [ ] 💙 If both players are in the door, [Win!]
 - [ ] 💚 Second level

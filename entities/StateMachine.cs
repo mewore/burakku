@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class StateMachine : Node
 {
-    private State[] states;
     private readonly Dictionary<string, State> stateByName = new Dictionary<string, State>();
     private State currentState;
 

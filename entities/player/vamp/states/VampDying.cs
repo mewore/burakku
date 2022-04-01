@@ -21,7 +21,7 @@ public class VampDying : VampState
     public override void PhysicsProcess(float delta)
     {
         vamp.Move(delta, false);
-        if (!animationPlayer.IsPlaying() && vamp.Motion.LengthSquared() <= MAX_MOTION_SQUARED)
+        if (!animationPlayer.IsPlaying() && vamp.IsOnFloor() && vamp.Motion.LengthSquared() <= MAX_MOTION_SQUARED)
         {
             animationPlayer.Play("stop_burning");
         }
