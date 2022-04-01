@@ -50,6 +50,10 @@ public class Vamp : Player
     {
         foreach (BlacklightSource blacklightSource in blacklightSources)
         {
+            if (!blacklightSource.TurnedOn)
+            {
+                continue;
+            }
             var squaredDistanceToTarget = blacklightSource.GlobalPosition.DistanceSquaredTo(GlobalPosition);
             if (squaredDistanceToTarget < squaredRadius)
             {

@@ -22,7 +22,7 @@ Blacklight" is already taken.~~
   upwards and fade out
 - [x] 💙 Button that opens a door
 - [x] 💙 Stationary blacklights
-- [ ] 💙 Button that disables a blacklight
+- [x] 💙 Button that disables a blacklight
 - [ ] 💙 Door where if a character goes, they exit the level and can reappear with [Jump]
 - [ ] 💙 If both players are in the door, [Win!]
 - [ ] 💚 Second level

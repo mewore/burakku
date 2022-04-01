@@ -1,7 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-public class BlacklightSource : Polygon2D
+public class BlacklightSource : Node2D, Operable
 {
     private const float ROTATION_SPEED = Mathf.Tau * .5f;
 
@@ -15,15 +15,23 @@ public class BlacklightSource : Polygon2D
     private Dictionary<Node2D, Vector2[]> pointsPerNode;
     private Dictionary<Node2D, (Vector2, float)[]> circlesPerNode;
 
+    private Polygon2D lightPolygon;
+    private Node2D subPolygon;
+    private AnimationPlayer animationPlayer;
+
     private float rayLength;
     public float RayLength { get => rayLength; }
     private Vector2 rayVector;
     private RayCast2D ray;
 
-    private Node2D subPolygon;
-
     private const int MINIMUM_RAY_COUNT = 4;
     private float[] mandatoryRayAngles = new float[MINIMUM_RAY_COUNT];
+
+    private bool shouldBeTurnedOn = true;
+
+    [Export]
+    private bool turnedOn = true;
+    public bool TurnedOn { get => turnedOn; }
 
     public override void _Ready()
     {
@@ -34,7 +42,10 @@ public class BlacklightSource : Polygon2D
             mandatoryRayAngles[rayIndex] = currentAngle;
         }
 
+        lightPolygon = GetNode<Polygon2D>("LightPolygon");
         subPolygon = GetNode<Node2D>("Polygon2D");
+        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+
         ray = GetNode<RayCast2D>("RayCast2D");
         rayLength = ray.CastTo.Length();
         rayVector = new Vector2(-rayLength, 0f);
@@ -124,6 +135,10 @@ public class BlacklightSource : Polygon2D
     public override void _Process(float delta)
     {
         subPolygon.Rotate(delta * ROTATION_SPEED);
+        if (!animationPlayer.IsPlaying() && turnedOn != shouldBeTurnedOn)
+        {
+            animationPlayer.Play(shouldBeTurnedOn ? "start" : "cease");
+        }
 
         // Make a list of the necessary raycasting angles
         Vector2 globalPosition = GlobalPosition;
@@ -224,7 +239,7 @@ public class BlacklightSource : Polygon2D
             }
         }
 
-        Polygon = withoutCoplanar.ToArray();
+        lightPolygon.Polygon = withoutCoplanar.ToArray();
     }
 
     private void subdivideAngleIfNecessary((float, Vector2, Object, int) first, (float, Vector2, Object, int) second, List<Vector2> resultList)
@@ -275,5 +290,15 @@ public class BlacklightSource : Polygon2D
         // If the slopes between two pairs of points are the same, then the 3 points are coplanar
         // This formula is adjusted so that there is multiplication instead of division
         return Mathf.Abs((third.y - second.y) * (second.x - first.x) - (second.y - first.y) * (third.x - second.x)) < 0.0001f;
+    }
+
+    public void Activate()
+    {
+        shouldBeTurnedOn = false;
+    }
+
+    public void Deactivate()
+    {
+        shouldBeTurnedOn = true;
     }
 }

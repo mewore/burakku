@@ -108,5 +108,12 @@ target = NodePath("../Door")
 position = Vector2( 464, 280 )
 target = NodePath("../Door")
 
+[node name="Button4" parent="." instance=ExtResource( 5 )]
+position = Vector2( 224, 280 )
+target = NodePath("../NastyBlacklight")
+
 [node name="BlacklightSource" parent="." instance=ExtResource( 3 )]
-position = Vector2( 312, 120 )
+position = Vector2( 312, 144 )
+
+[node name="NastyBlacklight" parent="." instance=ExtResource( 3 )]
+position = Vector2( 216, 176 )
