@@ -65,11 +65,9 @@ jump={
 
 [layer_names]
 
-2d_physics/layer_1="Ghost"
-2d_physics/layer_2="Force field"
-2d_physics/layer_3="Robot"
-2d_physics/layer_4="Wall"
-2d_physics/layer_5="Steam"
+2d_physics/layer_1="Solid"
+2d_physics/layer_2="Light-blocking"
+2d_physics/layer_3="Player"
 
 [physics]
 

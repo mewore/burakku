@@ -14,7 +14,7 @@ Blacklight" is already taken.~~
 
 - [x] 💙 Player (blacklight) moving around with [A]/[D]
 - [x] 💙 Jumping with [W]
-- [ ] 💙 Light coming from the first player (this is going to be a hard one...)
+- [x] 💙 Light coming from the first player (this is going to be a hard one...)
 - [ ] 💙 Other player (vampire) moving around with [left arrow]/[right arrow] and jumping with [up]
 - [ ] 💙 The other player gets hurt by the first player if there is a direct line of sight between them
     - When the other player's HP turns 0, restart the level ([Lose!])

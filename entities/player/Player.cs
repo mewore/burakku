@@ -44,7 +44,7 @@ public class Player : KinematicBody2D
 
         motion.y = Mathf.Min(isOnFloor ? motion.y : (motion.y + GRAVITY * delta), MAX_FALL_SPEED);
 
-        if (Input.IsActionPressed("jump"))
+        if (Input.IsActionJustPressed("jump"))
         {
             lastWantedToJumpAt = now;
         }
