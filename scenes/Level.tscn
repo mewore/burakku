@@ -1,26 +1,51 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://entities/player/Blacklight.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/player/Vamp.tscn" type="PackedScene" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 1
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0.506015 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=3]
+colors = PoolColorArray( 0.842773, 0.463984, 0.121807, 1, 1, 0.169922, 0, 0 )
+
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 24, 8 )
 
-[sub_resource type="SegmentShape2D" id=2]
+[sub_resource type="SegmentShape2D" id=5]
 a = Vector2( -16, 0 )
 b = Vector2( 24, -8 )
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=6]
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="CapsuleShape2D" id=7]
 
 [node name="Level" type="Node2D"]
 
 [node name="Blacklight" parent="." instance=ExtResource( 1 )]
-position = Vector2( 256, 280 )
+position = Vector2( 296, 280 )
 
 [node name="Vamp" parent="." instance=ExtResource( 2 )]
-position = Vector2( 328, 280 )
+position = Vector2( 312, 128 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+material = SubResource( 1 )
+amount = 100
+emission_shape = 4
+emission_points = PoolVector2Array( 8, 0 )
+emission_normals = PoolVector2Array( 1, 0 )
+emission_colors = PoolColorArray(  )
+spread = 90.0
+gravity = Vector2( 0, -20 )
+initial_velocity = 20.0
+linear_accel = -20.01
+scale_amount = 10.0
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 2 )
+color_ramp = SubResource( 3 )
 
 [node name="World" type="StaticBody2D" parent="." groups=[
 "opaque",
@@ -39,25 +64,25 @@ polygon = PoolVector2Array( 216, 280, 176, 272, 144, 256, 112, 224, 96, 192, 32,
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World"]
 position = Vector2( 296, 224 )
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="World"]
 position = Vector2( 216, 216 )
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="World"]
 position = Vector2( 312, 136 )
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="World"]
 position = Vector2( 424, 224 )
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 one_way_collision = true
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="World"]
 position = Vector2( 464, 176 )
-shape = SubResource( 3 )
+shape = SubResource( 6 )
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="World"]
 position = Vector2( 392, 160 )
-shape = SubResource( 4 )
+shape = SubResource( 7 )

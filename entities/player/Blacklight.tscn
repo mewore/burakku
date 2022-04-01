@@ -8,10 +8,5 @@ walkLeftInputName = "move_left_first"
 walkRightInputName = "move_right_first"
 jumpInputName = "jump_first"
 
-[node name="LightSource" type="Position2D" parent="." index="2" groups=[
-"blacklight_source",
-]]
-position = Vector2( 0, -24 )
-
-[node name="BlacklightSource" parent="." index="3" instance=ExtResource( 2 )]
+[node name="BlacklightSource" parent="." index="2" instance=ExtResource( 2 )]
 position = Vector2( 0, -24 )

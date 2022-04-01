@@ -5,7 +5,9 @@
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
 
-[node name="BlacklightSource" type="Polygon2D"]
+[node name="BlacklightSource" type="Polygon2D" groups=[
+"blacklight_source",
+]]
 material = SubResource( 1 )
 color = Color( 0.223529, 0, 0.658824, 1 )
 script = ExtResource( 1 )

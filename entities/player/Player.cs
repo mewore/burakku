@@ -21,13 +21,13 @@ public class Player : KinematicBody2D
     private float now = 0f;
 
     [Export]
-    private string walkLeftInputName;
+    private string walkLeftInputName = "move_left";
 
     [Export]
-    private string walkRightInputName;
+    private string walkRightInputName = "move_right";
 
     [Export]
-    private string jumpInputName;
+    private string jumpInputName = "jump";
 
     public override void _Ready()
     {

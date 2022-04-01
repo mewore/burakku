@@ -9,13 +9,13 @@ public class BlacklightSource : Polygon2D
 
     const float LIGHT_OVERLAP = 3f;
 
-    private static Dictionary<Node2D, Vector2[]> pointsPerNode;
-    private static Dictionary<Node2D, (Vector2, float)[]> circlesPerNode;
+    private Dictionary<Node2D, Vector2[]> pointsPerNode;
+    private Dictionary<Node2D, (Vector2, float)[]> circlesPerNode;
 
+    private float rayLength;
+    public float RayLength { get => rayLength; }
     private Vector2 rayVector;
     private RayCast2D ray;
-
-    private int counter = 0;
 
     private const int MINIMUM_RAY_COUNT = 4;
     private float[] mandatoryRayAngles = new float[MINIMUM_RAY_COUNT];
@@ -30,14 +30,15 @@ public class BlacklightSource : Polygon2D
         }
 
         ray = GetNode<RayCast2D>("RayCast2D");
-        rayVector = new Vector2(-ray.CastTo.Length(), 0f);
+        rayLength = ray.CastTo.Length();
+        rayVector = new Vector2(-rayLength, 0f);
         if (pointsPerNode == null || circlesPerNode == null)
         {
             updateRayTargets(GetTree(), ray.CollisionMask);
         }
     }
 
-    private static void updateRayTargets(SceneTree tree, uint collisionMask)
+    private void updateRayTargets(SceneTree tree, uint collisionMask)
     {
         pointsPerNode = new Dictionary<Node2D, Vector2[]>();
         circlesPerNode = new Dictionary<Node2D, (Vector2, float)[]>();

@@ -1,8 +1,38 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://entities/player/Vamp.cs" type="Script" id=2]
+[ext_resource path="res://entities/player/vamp/HitFire.tscn" type="PackedScene" id=3]
+[ext_resource path="res://util/LineBar.cs" type="Script" id=4]
 
-[node name="Vamp" instance=ExtResource( 1 )]
+[node name="Vamp" groups=[
+"vampire",
+] instance=ExtResource( 1 )]
+collision_layer = 12
+script = ExtResource( 2 )
 walkLeftInputName = "move_left_second"
 walkRightInputName = "move_right_second"
 jumpInputName = "jump_second"
+hitFireScene = ExtResource( 3 )
+
+[node name="Center" type="Position2D" parent="." index="2"]
+position = Vector2( 0, -16 )
+
+[node name="Top" type="Position2D" parent="." index="3"]
+position = Vector2( 0, -32 )
+
+[node name="DamageRay" type="RayCast2D" parent="." index="4"]
+exclude_parent = false
+collision_mask = 10
+
+[node name="HpBar" type="Line2D" parent="." index="5"]
+position = Vector2( 0, -40 )
+points = PoolVector2Array( -24, 0, 24, 0 )
+default_color = Color( 0, 0, 0, 1 )
+begin_cap_mode = 2
+end_cap_mode = 2
+script = ExtResource( 4 )
+
+[node name="Inner" type="Line2D" parent="HpBar" index="0"]
+points = PoolVector2Array( -24, 0, 24, 0 )
+width = 6.0
