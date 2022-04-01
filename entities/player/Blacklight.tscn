@@ -4,6 +4,9 @@
 [ext_resource path="res://entities/blacklight/BlacklightSource.tscn" type="PackedScene" id=2]
 
 [node name="Blacklight" instance=ExtResource( 1 )]
+walkLeftInputName = "move_left_first"
+walkRightInputName = "move_right_first"
+jumpInputName = "jump_first"
 
 [node name="LightSource" type="Position2D" parent="." index="2" groups=[
 "blacklight_source",

@@ -21,10 +21,13 @@ public class Player : KinematicBody2D
     private float now = 0f;
 
     [Export]
-    private string walkLeftInputName = null;
+    private string walkLeftInputName;
 
     [Export]
-    private string walkRightInputName = null;
+    private string walkRightInputName;
+
+    [Export]
+    private string jumpInputName;
 
     public override void _Ready()
     {
@@ -44,7 +47,7 @@ public class Player : KinematicBody2D
 
         motion.y = Mathf.Min(isOnFloor ? motion.y : (motion.y + GRAVITY * delta), MAX_FALL_SPEED);
 
-        if (Input.IsActionJustPressed("jump"))
+        if (Input.IsActionJustPressed(jumpInputName))
         {
             lastWantedToJumpAt = now;
         }
@@ -59,7 +62,7 @@ public class Player : KinematicBody2D
             motion.y = -jumpSpeed;
             isJumping = true;
         }
-        else if (isJumping && Input.IsActionJustReleased("jump"))
+        else if (isJumping && Input.IsActionJustReleased(jumpInputName))
         {
             motion = new Vector2(motion.x, motion.y * JUMP_SPEED_RETENTION);
             isJumping = false;

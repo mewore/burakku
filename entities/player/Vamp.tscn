@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=1]
+
+[node name="Vamp" instance=ExtResource( 1 )]
+walkLeftInputName = "move_left_second"
+walkRightInputName = "move_right_second"
+jumpInputName = "jump_second"

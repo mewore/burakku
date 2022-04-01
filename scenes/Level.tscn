@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://entities/player/Blacklight.tscn" type="PackedScene" id=1]
+[ext_resource path="res://entities/player/Vamp.tscn" type="PackedScene" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 24, 8 )
@@ -17,6 +18,9 @@ b = Vector2( 24, -8 )
 
 [node name="Blacklight" parent="." instance=ExtResource( 1 )]
 position = Vector2( 256, 280 )
+
+[node name="Vamp" parent="." instance=ExtResource( 2 )]
+position = Vector2( 328, 280 )
 
 [node name="World" type="StaticBody2D" parent="." groups=[
 "opaque",
