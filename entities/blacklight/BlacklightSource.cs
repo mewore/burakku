@@ -1,7 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-public class BlacklightSource : Node2D, Operable
+public class BlacklightSource : Node2D
 {
     private const float ROTATION_SPEED = Mathf.Tau * 1f;
 
@@ -16,7 +16,7 @@ public class BlacklightSource : Node2D, Operable
     private Dictionary<Node2D, (Vector2, float)[]> circlesPerNode;
 
     private Polygon2D lightPolygon;
-    private Node2D subPolygon;
+    private Node2D littleLight;
     private AnimationPlayer animationPlayer;
 
     private float rayLength;
@@ -43,7 +43,7 @@ public class BlacklightSource : Node2D, Operable
         }
 
         lightPolygon = GetNode<Polygon2D>("LightPolygon");
-        subPolygon = GetNode<Node2D>("Polygon2D");
+        littleLight = GetNode<Node2D>("LittleLight");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
         ray = GetNode<RayCast2D>("RayCast2D");
@@ -132,18 +132,25 @@ public class BlacklightSource : Node2D, Operable
         }
     }
 
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
         if (!animationPlayer.IsPlaying() && turnedOn != shouldBeTurnedOn)
         {
             animationPlayer.Play(shouldBeTurnedOn ? "start" : "cease");
         }
+    }
+
+    public override void _Process(float delta)
+    {
+        littleLight.Visible = lightPolygon.Visible;
         if (!lightPolygon.Visible)
         {
             return;
         }
 
-        subPolygon.Rotate(delta * ROTATION_SPEED);
+        float littleLightOpacity = Mathf.Clamp(littleLight.Modulate.a + (GD.Randf() - .5f) * 10f * delta, lightPolygon.SelfModulate.a * .7f, lightPolygon.SelfModulate.a);
+        littleLight.Modulate = new Color(littleLight.Modulate, littleLightOpacity);
+        littleLight.Scale = Vector2.One * (.25f + littleLightOpacity * 1.5f);
 
         // Make a list of the necessary raycasting angles
         Vector2 globalPosition = GlobalPosition;
@@ -299,7 +306,4 @@ public class BlacklightSource : Node2D, Operable
 
     public void TurnOn() => shouldBeTurnedOn = true;
     public void TurnOff() => shouldBeTurnedOn = false;
-
-    public void Activate() => TurnOff();
-    public void Deactivate() => TurnOn();
 }

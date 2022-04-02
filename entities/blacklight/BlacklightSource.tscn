@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://entities/blacklight/BlacklightSource.cs" type="Script" id=1]
+[ext_resource path="res://entities/blacklight/little-light.png" type="Texture" id=2]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -90,18 +91,20 @@ tracks/2/keys = {
 ]]
 material = SubResource( 1 )
 script = ExtResource( 1 )
+turnedOn = false
 
 [node name="LightPolygon" type="Polygon2D" parent="."]
+visible = false
 material = SubResource( 1 )
 color = Color( 0.223529, 0, 0.658824, 1 )
+
+[node name="LittleLight" type="Sprite" parent="."]
+use_parent_material = true
+texture = ExtResource( 2 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 cast_to = Vector2( 1000, 0 )
 collision_mask = 2
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color( 0.870588, 0.662745, 1, 1 )
-polygon = PoolVector2Array( -4, 0, 0, -4, 4, 0, 0, 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/cease = SubResource( 2 )
