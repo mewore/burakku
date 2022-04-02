@@ -20,6 +20,7 @@ public class Player : KinematicBody2D
     private Vector2 motion = new Vector2();
     public Vector2 Motion { get => motion; }
 
+    private Node2D sprite;
     private AnimationPlayer animationPlayer;
     private AnimationPlayer tipAnimationPlayer;
 
@@ -63,6 +64,7 @@ public class Player : KinematicBody2D
     {
         float jumpHeight = -GetNode<Node2D>("MaxJumpHeight").Position.y;
         jumpSpeed = Mathf.Sqrt(GRAVITY * jumpHeight * 2f);
+        sprite = GetNode<Node2D>("Sprite");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         tipAnimationPlayer = GetNode<AnimationPlayer>("Tip/AnimationPlayer");
         doorDetectionShape = GetNode<CollisionShape2D>("DoorDetector/CollisionShape2D");
@@ -119,6 +121,25 @@ public class Player : KinematicBody2D
         isJumping = isJumping && motion.y < 0f;
 
         motion = MoveAndSlide(motion, Vector2.Up);
+
+        if (canControl && sprite.Visible)
+        {
+            string targetAnimation = (Mathf.Abs(motion.x) < MAX_SPEED * .2f) ? "idle" : "walk";
+            if (now - lastOnFloorAt > JUMP_GRACE_PERIOD)
+            {
+                targetAnimation = ((motion.y < 0f) ? "jump" : "fall") + (targetAnimation.Equals("idle") ? "" : "_side");
+            }
+            int motionScale = Mathf.Sign(motion.x);
+            if (motionScale != 0 && Mathf.Sign(sprite.Scale.x) != motionScale)
+            {
+                sprite.Scale = new Vector2(sprite.Scale.x * -1f, sprite.Scale.y);
+            }
+            if (!targetAnimation.Equals(animationPlayer.CurrentAnimation))
+            {
+                animationPlayer.Play(targetAnimation);
+            }
+        }
+
         doorDetectionShape.Disabled = !canControl || now - lastOnFloorAt > DOOR_ENTER_GRACE_PERIOD;
     }
 

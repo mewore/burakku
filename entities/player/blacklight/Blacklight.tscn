@@ -8,8 +8,8 @@
 script = ExtResource( 3 )
 inputSuffix = "second"
 
-[node name="Sprite" parent="." index="0"]
-color = Color( 0, 0.203922, 1, 1 )
+[node name="Sprite" parent="." index="1"]
+visible = false
 
 [node name="BlacklightSource" parent="." index="2" instance=ExtResource( 2 )]
 position = Vector2( 0, -16 )

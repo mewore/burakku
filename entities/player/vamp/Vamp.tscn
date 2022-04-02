@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/player/vamp/Vamp.cs" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://util/LineBar.cs" type="Script" id=4]
 [ext_resource path="res://entities/player/vamp/states/VampDying.cs" type="Script" id=5]
 [ext_resource path="res://entities/player/vamp/states/VampActive.cs" type="Script" id=6]
+[ext_resource path="res://entities/player/vamp/vamp.png" type="Texture" id=7]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -78,6 +79,38 @@ tracks/2/keys = {
 } ]
 }
 
+[sub_resource type="Animation" id=7]
+resource_name = "fall_side"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 8 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "jump_side"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 7 ]
+}
+
 [node name="Vamp" groups=[
 "vampire",
 ] instance=ExtResource( 1 )]
@@ -86,8 +119,13 @@ script = ExtResource( 2 )
 inputSuffix = "first"
 hitFireScene = ExtResource( 3 )
 
-[node name="Sprite" parent="." index="0"]
-color = Color( 1, 0, 0.352941, 1 )
+[node name="SpritePolygon" parent="." index="0"]
+visible = false
+
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource( 7 )
+hframes = 9
+frame = 2
 
 [node name="Center" type="Position2D" parent="." index="2"]
 position = Vector2( 0, -12 )
@@ -141,6 +179,10 @@ script = ExtResource( 5 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="StateMachine/Dying" index="0"]
 anims/die = SubResource( 5 )
 anims/stop_burning = SubResource( 6 )
+
+[node name="AnimationPlayer" parent="." index="11"]
+anims/fall_side = SubResource( 7 )
+anims/jump_side = SubResource( 8 )
 
 [node name="TipLabel" parent="Tip" index="0"]
 text = "Move: [A] [D]
