@@ -2,6 +2,9 @@ using Godot;
 
 public class WinDoor : Node2D
 {
+    [Signal]
+    delegate void Won();
+
     private const float FADE_SPEED = 4f;
 
     private int playersInside = 0;
@@ -24,7 +27,7 @@ public class WinDoor : Node2D
     {
         float maxOpacityChange = FADE_SPEED * delta;
         UpdateOpacity(enterTip, (playersInRange - playersInside) > 0 ? 1f : 0f, maxOpacityChange);
-        UpdateOpacity(leaveTip, (playersInside > 0 && playersInside < 2) ? 1f : 0f, maxOpacityChange);
+        UpdateOpacity(leaveTip, (playersInside > 0 && !HasWon) ? 1f : 0f, maxOpacityChange);
     }
 
     private static void UpdateOpacity(CanvasItem item, float target, float maxChange)
@@ -41,6 +44,10 @@ public class WinDoor : Node2D
     public void PlayerEntered()
     {
         ++playersInside;
+        if (HasWon)
+        {
+            EmitSignal(nameof(Won));
+        }
     }
 
     public void PlayerLeft()

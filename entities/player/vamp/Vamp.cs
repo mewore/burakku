@@ -1,9 +1,11 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 public class Vamp : Player
 {
+    [Signal]
+    delegate void Died();
+
     private const float HIT_FIRE_DISTANCE = 12f;
     private const float HP_LOST_PER_HIT_PER_SECOND = .1f;
     private const int DAMAGE_RAYCAST_RESOLUTION_MIN = 5;
@@ -123,5 +125,10 @@ public class Vamp : Player
     public void registerHit(Vector2 hitPosition)
     {
         pendingHitAngles.Add(ToGlobal(center).AngleToPoint(hitPosition) + Mathf.Pi);
+    }
+
+    public void _on_Dying_Finished()
+    {
+        EmitSignal(nameof(Died));
     }
 }

@@ -2,9 +2,13 @@ using Godot;
 
 public class VampDying : VampState
 {
+    [Signal]
+    delegate void Finished();
+
     private const float MAX_MOTION_SQUARED = 20f;
 
     private AnimationPlayer animationPlayer;
+    private bool finished = false;
 
     public override void _Ready()
     {
@@ -14,14 +18,16 @@ public class VampDying : VampState
 
     public override void Enter()
     {
+        GD.Print("Playing 'die'");
         animationPlayer.Play("die");
     }
 
     public override void PhysicsProcess(float delta)
     {
         vamp.Move(delta, false);
-        if (!animationPlayer.IsPlaying() && vamp.IsOnFloor() && vamp.Motion.LengthSquared() <= MAX_MOTION_SQUARED)
+        if (!finished && !animationPlayer.IsPlaying() && vamp.IsOnFloor() && vamp.Motion.LengthSquared() <= MAX_MOTION_SQUARED)
         {
+            GD.Print("Playing 'stop_burning'");
             animationPlayer.Play("stop_burning");
         }
     }
@@ -33,6 +39,7 @@ public class VampDying : VampState
 
     public void Finish()
     {
-        GetTree().ReloadCurrentScene();
+        finished = true;
+        EmitSignal(nameof(Finished));
     }
 }

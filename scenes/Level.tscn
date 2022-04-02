@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://entities/player/blacklight/Blacklight.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/player/vamp/Vamp.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://entities/door/Door.tscn" type="PackedScene" id=4]
 [ext_resource path="res://entities/button/Button.tscn" type="PackedScene" id=5]
 [ext_resource path="res://entities/win-door/WinDoor.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ui/Overlay.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/Level.cs" type="Script" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 24, 32 )
@@ -31,6 +33,7 @@ b = Vector2( 32, -8 )
 [sub_resource type="CapsuleShape2D" id=8]
 
 [node name="Level" type="Node2D"]
+script = ExtResource( 8 )
 
 [node name="Blacklight" parent="." instance=ExtResource( 1 )]
 position = Vector2( 264, 280 )
@@ -122,3 +125,10 @@ position = Vector2( 456, 280 )
 
 [node name="WinDoor2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 328, 80 )
+
+[node name="Overlay" parent="." instance=ExtResource( 7 )]
+
+[connection signal="Died" from="Vamp" to="." method="_on_Vamp_Died"]
+[connection signal="Won" from="WinDoor" to="." method="_on_WinDoor_Won"]
+[connection signal="Won" from="WinDoor2" to="." method="_on_WinDoor_Won"]
+[connection signal="FadeOutDone" from="Overlay" to="." method="_on_Overlay_FadeOutDone"]
