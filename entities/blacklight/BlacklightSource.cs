@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class BlacklightSource : Node2D, Operable
 {
-    private const float ROTATION_SPEED = Mathf.Tau * .5f;
+    private const float ROTATION_SPEED = Mathf.Tau * 1f;
 
     const float ANGLE_OFFSET = .001f;
     const float MIN_ANGLE_DIFFERENCE = ANGLE_OFFSET * .5f;
@@ -134,11 +134,16 @@ public class BlacklightSource : Node2D, Operable
 
     public override void _Process(float delta)
     {
-        subPolygon.Rotate(delta * ROTATION_SPEED);
         if (!animationPlayer.IsPlaying() && turnedOn != shouldBeTurnedOn)
         {
             animationPlayer.Play(shouldBeTurnedOn ? "start" : "cease");
         }
+        if (!lightPolygon.Visible)
+        {
+            return;
+        }
+
+        subPolygon.Rotate(delta * ROTATION_SPEED);
 
         // Make a list of the necessary raycasting angles
         Vector2 globalPosition = GlobalPosition;
@@ -292,13 +297,9 @@ public class BlacklightSource : Node2D, Operable
         return Mathf.Abs((third.y - second.y) * (second.x - first.x) - (second.y - first.y) * (third.x - second.x)) < 0.0001f;
     }
 
-    public void Activate()
-    {
-        shouldBeTurnedOn = false;
-    }
+    public void TurnOn() => shouldBeTurnedOn = true;
+    public void TurnOff() => shouldBeTurnedOn = false;
 
-    public void Deactivate()
-    {
-        shouldBeTurnedOn = true;
-    }
+    public void Activate() => TurnOff();
+    public void Deactivate() => TurnOn();
 }

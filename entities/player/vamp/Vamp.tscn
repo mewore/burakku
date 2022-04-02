@@ -7,10 +7,10 @@
 [ext_resource path="res://entities/player/vamp/states/VampDying.cs" type="Script" id=5]
 [ext_resource path="res://entities/player/vamp/states/VampActive.cs" type="Script" id=6]
 
-[sub_resource type="CanvasItemMaterial" id=2]
+[sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
 
-[sub_resource type="Curve" id=5]
+[sub_resource type="Curve" id=2]
 min_value = -5.0
 max_value = 0.0
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, -5 ), 0.0, 0.0, 0, 0 ]
@@ -22,8 +22,7 @@ _data = [ Vector2( 0, 0.32974 ), 0.0, 0.0, 0, 0, Vector2( 0.596899, 1 ), 0.0, 0.
 offsets = PoolRealArray( 0, 0.161702, 1 )
 colors = PoolColorArray( 1, 0.646616, 0, 0, 0.953125, 0.581805, 0.111694, 1, 0.425515, 0, 0, 0 )
 
-[sub_resource type="Animation" id=1]
-resource_name = "die"
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("../../DeathFire:emitting")
 tracks/0/interp = 1
@@ -84,9 +83,7 @@ tracks/2/keys = {
 ] instance=ExtResource( 1 )]
 collision_layer = 28
 script = ExtResource( 2 )
-walkLeftInputName = "move_left_second"
-walkRightInputName = "move_right_second"
-jumpInputName = "jump_second"
+inputSuffix = "second"
 hitFireScene = ExtResource( 3 )
 
 [node name="Center" type="Position2D" parent="." index="2"]
@@ -100,7 +97,7 @@ exclude_parent = false
 collision_mask = 10
 
 [node name="DeathFire" type="CPUParticles2D" parent="." index="5"]
-material = SubResource( 2 )
+material = SubResource( 1 )
 position = Vector2( 0, -8 )
 emitting = false
 amount = 200
@@ -115,7 +112,7 @@ spread = 180.0
 gravity = Vector2( 0, -40 )
 angular_velocity = 20.0
 radial_accel = -3.29
-radial_accel_curve = SubResource( 5 )
+radial_accel_curve = SubResource( 2 )
 scale_amount = 20.0
 scale_amount_curve = SubResource( 3 )
 color_ramp = SubResource( 4 )
@@ -139,5 +136,5 @@ script = ExtResource( 6 )
 script = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="StateMachine/Dying" index="0"]
-anims/die = SubResource( 1 )
+anims/die = SubResource( 5 )
 anims/stop_burning = SubResource( 6 )

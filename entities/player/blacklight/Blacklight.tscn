@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/blacklight/BlacklightSource.tscn" type="PackedScene" id=2]
+[ext_resource path="res://entities/player/blacklight/Blacklight.cs" type="Script" id=3]
 
 [node name="Blacklight" instance=ExtResource( 1 )]
-walkLeftInputName = "move_left_first"
-walkRightInputName = "move_right_first"
-jumpInputName = "jump_first"
+script = ExtResource( 3 )
+inputSuffix = "first"
 
 [node name="BlacklightSource" parent="." index="2" instance=ExtResource( 2 )]
 position = Vector2( 0, -16 )

@@ -1,10 +1,11 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public class StateMachine : Node
 {
     private readonly Dictionary<string, State> stateByName = new Dictionary<string, State>();
-    private State currentState;
+    private State state;
 
     public override void _Ready()
     {
@@ -15,54 +16,51 @@ public class StateMachine : Node
             if (stateNodes[nodeIndex] is State)
             {
                 var state = (State)stateNodes[nodeIndex];
-                if (currentState == null)
+                if (this.state == null)
                 {
-                    currentState = state;
+                    this.state = state;
                 }
                 stateByName.Add(state.Name, state);
             }
-        }
-    }
-
-    public override void _Process(float delta)
-    {
-        if (currentState == null)
-        {
-            return;
-        }
-        currentState.TargetState = null;
-        currentState.Process(delta);
-        checkForTargetState();
-    }
-
-    public override void _PhysicsProcess(float delta)
-    {
-        if (currentState == null)
-        {
-            return;
-        }
-        currentState.TargetState = null;
-        currentState.PhysicsProcess(delta);
-        checkForTargetState();
-    }
-
-    private void checkForTargetState()
-    {
-        if (currentState.TargetState != null)
-        {
-            if (currentState.TargetState.Equals(currentState.Name))
+            else
             {
-                GD.PushWarning("Cannot switch to state '" + currentState.TargetState + "' from the same state.");
+                GD.PushWarning("State machine " + GetPath() + " contains a non-state node: " + ((Node)stateNodes[nodeIndex]).Name);
+            }
+        }
+        if (state == null)
+        {
+            GD.PushWarning("State machine " + GetPath() + " contains no state nodes");
+            QueueFree();
+        }
+    }
+
+    public override void _Process(float delta) => performStateUpdate(() => state.Process(delta));
+
+    public override void _PhysicsProcess(float delta) => performStateUpdate(() => state.PhysicsProcess(delta));
+
+    public override void _UnhandledInput(InputEvent @event) => performStateUpdate(() => state.UnhandledInput(@event));
+
+    private void performStateUpdate(Action stateUpdate)
+    {
+        stateUpdate.Invoke();
+        string targetState = state.TargetState;
+        if (targetState != null)
+        {
+            if (state.Name.Equals(targetState))
+            {
+                GD.PushWarning("Cannot switch to state '" + targetState + "' from the same state.");
                 return;
             }
-            if (!stateByName.ContainsKey(currentState.TargetState))
+            if (!stateByName.ContainsKey(targetState))
             {
-                GD.PushWarning("Cannot switch to state '" + currentState.TargetState + "' because it does not exist.");
+                GD.PushWarning("Cannot switch to state '" + targetState + "' because it does not exist.");
                 return;
             }
-            currentState.Exit();
-            currentState = stateByName[currentState.TargetState];
-            currentState.Enter();
+            state.Exit();
+            state.ClearTargetState();
+            state = stateByName[targetState];
+            state.ClearTargetState();
+            state.Enter();
         }
     }
 }

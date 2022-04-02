@@ -2,7 +2,8 @@ using Godot;
 
 public abstract class State : Node
 {
-    public string TargetState;
+    protected string targetState;
+    public string TargetState { get => targetState; }
 
     public virtual void Enter()
     {
@@ -18,5 +19,14 @@ public abstract class State : Node
 
     public virtual void Process(float delta)
     {
+    }
+
+    public virtual void UnhandledInput(InputEvent @event)
+    {
+    }
+
+    public void ClearTargetState()
+    {
+        targetState = null;
     }
 }

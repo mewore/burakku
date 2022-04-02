@@ -5,7 +5,6 @@ public class VampDying : VampState
     private const float MAX_MOTION_SQUARED = 20f;
 
     private AnimationPlayer animationPlayer;
-    private bool finished = false;
 
     public override void _Ready()
     {

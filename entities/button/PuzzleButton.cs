@@ -29,7 +29,6 @@ public class PuzzleButton : Node2D
             targetNode.Activate();
             innerButton.Position = new Vector2(innerButton.Position.x, pressedY);
         }
-        GD.Print(pressers);
     }
 
     public void _on_PressArea_body_exited(Node body)
@@ -39,6 +38,5 @@ public class PuzzleButton : Node2D
             targetNode.Deactivate();
             innerButton.Position = new Vector2(innerButton.Position.x, notPressedY);
         }
-        GD.Print(pressers);
     }
 }

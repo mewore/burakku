@@ -16,7 +16,7 @@ public class Vamp : Player
     private List<float> lastHitAngles = new List<float>();
 
     [Export]
-    private PackedScene hitFireScene;
+    private PackedScene hitFireScene = null;
 
     private List<CPUParticles2D> hitFires = new List<CPUParticles2D>();
 

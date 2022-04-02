@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public class VampActive : VampState
 {
@@ -9,12 +8,17 @@ public class VampActive : VampState
         float hp = vamp.CheckForDamage(delta);
         if (hp < 0f)
         {
-            TargetState = DYING;
+            targetState = DYING;
         }
     }
 
     public override void Process(float delta)
     {
         vamp.RenderFire();
+    }
+
+    public override void UnhandledInput(InputEvent @event)
+    {
+        CheckEnterDoor(@event);
     }
 }

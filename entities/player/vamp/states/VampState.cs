@@ -1,6 +1,3 @@
-using Godot;
-using System;
-
 public class VampState : PlayerState
 {
     protected const string DYING = "Dying";
@@ -9,6 +6,7 @@ public class VampState : PlayerState
 
     public override void _Ready()
     {
+        base._Ready();
         vamp = GetOwner<Vamp>();
     }
 }

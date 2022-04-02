@@ -23,10 +23,11 @@ Blacklight" is already taken.~~
 - [x] 💙 Button that opens a door
 - [x] 💙 Stationary blacklights
 - [x] 💙 Button that disables a blacklight
-- [ ] 💙 Door where if a character goes, they exit the level and can reappear with [Jump]
+- [x] 💙 Door where if a character goes, they exit the level and can reappear with [Jump]
 - [ ] 💙 If both players are in the door, [Win!]
 - [ ] 💚 Second level
 - [ ] 💜 Use polygons to show the collision shapes
+- [ ] 💙 Add some in-game instructions
 - [ ] 💟 Publish `0.1.0`
 
 ### Basic features

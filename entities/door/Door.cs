@@ -5,7 +5,7 @@ public class Door : StaticBody2D, Operable
     private AnimationPlayer animationPlayer;
 
     [Export]
-    private bool opened;
+    private bool opened = false;
 
     private bool activated;
 
