@@ -46,6 +46,12 @@ blend_mode = 1
 
 [node name="Level2" instance=ExtResource( 5 )]
 
+[node name="Door" parent="Doors" index="0" instance=ExtResource( 4 )]
+position = Vector2( 312, 216 )
+
+[node name="WinDoor2" parent="." index="1" instance=ExtResource( 1 )]
+position = Vector2( 328, 80 )
+
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World" index="0"]
 polygon = PoolVector2Array( 32, 280, 480, 280, 480, 0, 512, 0, 512, 312, 0, 312, 0, 0, 32, 0 )
 
@@ -98,6 +104,22 @@ shape = SubResource( 10 )
 position = Vector2( 392, 160 )
 shape = SubResource( 11 )
 
+[node name="Polygon2D" type="Polygon2D" parent="World" index="13"]
+color = Color( 0.552941, 0.545098, 0.572549, 1 )
+polygon = PoolVector2Array( 176, 272, 216, 280, 376, 280, 376, 248, 392, 248, 392, 280, 480, 280, 480, 168, 416, 168, 404, 168, 400, 176, 392, 180, 384, 176, 380, 172, 336, 216, 288, 216, 288, 188, 264, 204, 256, 188, 288, 168, 288, 152, 336, 152, 336, 176, 380, 168, 380, 148, 388, 140, 396, 140, 400, 144, 400, 152, 480, 152, 480, -32, 528, -32, 528, 312, -16, 312, -16, -32, 32, -32, 32, 192, 96, 192, 108, 216, 160, 216, 160, 232, 120, 232, 144, 256 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="World" index="14"]
+color = Color( 0.552941, 0.545098, 0.572549, 1 )
+polygon = PoolVector2Array( 192, 208, 240, 208, 240, 224, 192, 224 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="World" index="15"]
+color = Color( 0.552941, 0.545098, 0.572549, 1 )
+polygon = PoolVector2Array( 288, 96, 336, 96, 336, 80, 288, 80 )
+
+[node name="Polygon2D4" type="Polygon2D" parent="World" index="16"]
+color = Color( 0.552941, 0.545098, 0.572549, 1 )
+polygon = PoolVector2Array( 432, 184, 440, 180, 448, 184, 452, 192, 448, 200, 440, 204, 432, 200, 428, 192 )
+
 [node name="BlacklightSource" parent="Blacklights" index="0" instance=ExtResource( 2 )]
 material = SubResource( 12 )
 position = Vector2( 312, 144 )
@@ -105,9 +127,6 @@ position = Vector2( 312, 144 )
 [node name="NastyBlacklight" parent="Blacklights" index="1" instance=ExtResource( 2 )]
 material = SubResource( 13 )
 position = Vector2( 216, 176 )
-
-[node name="WinDoor2" parent="." index="5" instance=ExtResource( 1 )]
-position = Vector2( 328, 80 )
 
 [node name="Button" parent="Buttons" index="0" instance=ExtResource( 3 )]
 position = Vector2( 216, 208 )
@@ -120,6 +139,3 @@ target = NodePath("../../Doors/Door")
 [node name="Button4" parent="Buttons" index="2" instance=ExtResource( 3 )]
 position = Vector2( 224, 280 )
 target = NodePath("../../Blacklights/NastyBlacklight")
-
-[node name="Door" parent="Doors" index="0" instance=ExtResource( 4 )]
-position = Vector2( 312, 216 )

@@ -9,11 +9,10 @@
 [node name="Level" type="Node2D"]
 script = ExtResource( 8 )
 
-[node name="Blacklight" parent="." instance=ExtResource( 1 )]
-position = Vector2( 264, 280 )
+[node name="Doors" type="Node2D" parent="."]
 
-[node name="Vamp" parent="." instance=ExtResource( 2 )]
-position = Vector2( 312, 80 )
+[node name="WinDoor" parent="." instance=ExtResource( 6 )]
+position = Vector2( 456, 280 )
 
 [node name="World" type="StaticBody2D" parent="." groups=[
 "opaque",
@@ -21,17 +20,18 @@ position = Vector2( 312, 80 )
 collision_layer = 3
 collision_mask = 4
 
-[node name="WinDoor" parent="." instance=ExtResource( 6 )]
-position = Vector2( 456, 280 )
+[node name="Blacklight" parent="." instance=ExtResource( 1 )]
+position = Vector2( 264, 280 )
+
+[node name="Vamp" parent="." instance=ExtResource( 2 )]
+position = Vector2( 312, 80 )
 
 [node name="Blacklights" type="Node2D" parent="."]
 
 [node name="Buttons" type="Node2D" parent="."]
 
-[node name="Doors" type="Node2D" parent="."]
-
 [node name="Overlay" parent="." instance=ExtResource( 7 )]
 
-[connection signal="Died" from="Vamp" to="." method="_on_Vamp_Died"]
 [connection signal="Won" from="WinDoor" to="." method="_on_WinDoor_Won"]
+[connection signal="Died" from="Vamp" to="." method="_on_Vamp_Died"]
 [connection signal="FadeOutDone" from="Overlay" to="." method="_on_Overlay_FadeOutDone"]

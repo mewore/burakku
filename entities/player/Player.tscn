@@ -145,6 +145,9 @@ tracks/4/keys = {
 collision_layer = 20
 script = ExtResource( 1 )
 
+[node name="Sprite" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( -4, 0, 4, 0, 8, -4, 8, -20, 4, -24, -4, -24, -8, -20, -8, -4 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -12 )
 shape = SubResource( 1 )

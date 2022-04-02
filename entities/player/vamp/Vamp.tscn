@@ -40,7 +40,7 @@ tracks/0/keys = {
 resource_name = "stop_burning"
 length = 3.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("../../CollisionShape2D:modulate")
+tracks/0/path = NodePath("../../Sprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -85,6 +85,9 @@ collision_layer = 28
 script = ExtResource( 2 )
 inputSuffix = "second"
 hitFireScene = ExtResource( 3 )
+
+[node name="Sprite" parent="." index="0"]
+color = Color( 1, 0, 0.352941, 1 )
 
 [node name="Center" type="Position2D" parent="." index="2"]
 position = Vector2( 0, -12 )
