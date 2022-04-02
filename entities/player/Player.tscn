@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://entities/player/Player.cs" type="Script" id=1]
 [ext_resource path="res://entities/player/states/PlayerActive.cs" type="Script" id=2]
@@ -141,6 +141,35 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
+[sub_resource type="Animation" id=5]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 20
 script = ExtResource( 1 )
@@ -176,6 +205,27 @@ shape = SubResource( 2 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/enter_door = SubResource( 3 )
 anims/leave_door = SubResource( 4 )
+
+[node name="Tip" type="Node2D" parent="."]
+position = Vector2( 0, -48 )
+scale = Vector2( 0.5, 0.5 )
+z_index = 5
+z_as_relative = false
+
+[node name="TipLabel" type="Label" parent="Tip"]
+margin_left = -128.0
+margin_top = -32.0
+margin_right = 128.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 256, 64 )
+align = 1
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tip"]
+anims/fade_out = SubResource( 5 )
 
 [connection signal="area_entered" from="DoorDetector" to="." method="_on_DoorDetector_area_entered"]
 [connection signal="area_exited" from="DoorDetector" to="." method="_on_DoorDetector_area_exited"]

@@ -18,7 +18,6 @@ public class VampDying : VampState
 
     public override void Enter()
     {
-        GD.Print("Playing 'die'");
         animationPlayer.Play("die");
     }
 
@@ -27,7 +26,6 @@ public class VampDying : VampState
         vamp.Move(delta, false);
         if (!finished && !animationPlayer.IsPlaying() && vamp.IsOnFloor() && vamp.Motion.LengthSquared() <= MAX_MOTION_SQUARED)
         {
-            GD.Print("Playing 'stop_burning'");
             animationPlayer.Play("stop_burning");
         }
     }

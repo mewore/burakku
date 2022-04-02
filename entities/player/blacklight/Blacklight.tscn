@@ -6,10 +6,14 @@
 
 [node name="Blacklight" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
-inputSuffix = "first"
+inputSuffix = "second"
 
 [node name="Sprite" parent="." index="0"]
 color = Color( 0, 0.203922, 1, 1 )
 
 [node name="BlacklightSource" parent="." index="2" instance=ExtResource( 2 )]
 position = Vector2( 0, -16 )
+
+[node name="TipLabel" parent="Tip" index="0"]
+text = "Move: < >
+Jump: ^"

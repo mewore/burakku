@@ -27,7 +27,7 @@ Blacklight" is already taken.~~
 - [x] 💙 If both players are in the door, [Win!]
 - [x] 💚 Second level
 - [x] 💜 Use polygons to show the collision shapes
-- [ ] 💙 Add some in-game instructions
+- [x] 💙 Add some in-game instructions
 - [ ] 💟 Publish `0.1.0`
 
 ### Basic features

@@ -21,6 +21,7 @@ public class Player : KinematicBody2D
     public Vector2 Motion { get => motion; }
 
     private AnimationPlayer animationPlayer;
+    private AnimationPlayer tipAnimationPlayer;
 
     private float now = 0f;
 
@@ -63,6 +64,7 @@ public class Player : KinematicBody2D
         float jumpHeight = -GetNode<Node2D>("MaxJumpHeight").Position.y;
         jumpSpeed = Mathf.Sqrt(GRAVITY * jumpHeight * 2f);
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        tipAnimationPlayer = GetNode<AnimationPlayer>("Tip/AnimationPlayer");
         doorDetectionShape = GetNode<CollisionShape2D>("DoorDetector/CollisionShape2D");
     }
 
@@ -84,6 +86,11 @@ public class Player : KinematicBody2D
             : motion.x + (targetMotionX > motion.x ? maxAcceleration : -maxAcceleration);
 
         motion.y = Mathf.Min(isOnFloor ? motion.y : (motion.y + GRAVITY * delta), MAX_FALL_SPEED);
+
+        if (targetMotionX != 0f && tipAnimationPlayer != null && !tipAnimationPlayer.IsPlaying())
+        {
+            tipAnimationPlayer.Play("fade_out");
+        }
 
         if (Input.IsActionJustPressed(JumpInput))
         {
