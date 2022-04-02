@@ -28,7 +28,7 @@ Blacklight" is already taken.~~
 - [x] 💚 Second level
 - [x] 💜 Use polygons to show the collision shapes
 - [x] 💙 Add some in-game instructions
-- [ ] 💟 Publish `0.1.0`
+- [x] 💟 Publish `0.1.0`
 
 ### Basic features
 
