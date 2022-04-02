@@ -34,7 +34,7 @@ Blacklight" is already taken.~~
 
 - [x] 💜 Simple blacklight sprite
 - [x] 💜 Simple vampire sprite
-- [ ] 💜 Simple blacklight character sprite
+- [x] 💜 Simple blacklight character sprite
 - [ ] 💜 Simple environment textures
 - [ ] 💟 Publish `0.1.1`
 - [ ] 💙 Main menu (just "Play")

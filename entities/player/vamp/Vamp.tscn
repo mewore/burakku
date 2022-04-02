@@ -7,6 +7,8 @@
 [ext_resource path="res://entities/player/vamp/states/VampDying.cs" type="Script" id=5]
 [ext_resource path="res://entities/player/vamp/states/VampActive.cs" type="Script" id=6]
 [ext_resource path="res://entities/player/vamp/vamp.png" type="Texture" id=7]
+[ext_resource path="res://entities/player/animations/jump_side.tres" type="Animation" id=8]
+[ext_resource path="res://entities/player/animations/fall_side.tres" type="Animation" id=9]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -79,38 +81,6 @@ tracks/2/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "fall_side"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 8 ]
-}
-
-[sub_resource type="Animation" id=8]
-resource_name = "jump_side"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 7 ]
-}
-
 [node name="Vamp" groups=[
 "vampire",
 ] instance=ExtResource( 1 )]
@@ -119,13 +89,9 @@ script = ExtResource( 2 )
 inputSuffix = "first"
 hitFireScene = ExtResource( 3 )
 
-[node name="SpritePolygon" parent="." index="0"]
-visible = false
-
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="0"]
 texture = ExtResource( 7 )
-hframes = 9
-frame = 2
+frame = 7
 
 [node name="Center" type="Position2D" parent="." index="2"]
 position = Vector2( 0, -12 )
@@ -180,9 +146,9 @@ script = ExtResource( 5 )
 anims/die = SubResource( 5 )
 anims/stop_burning = SubResource( 6 )
 
-[node name="AnimationPlayer" parent="." index="11"]
-anims/fall_side = SubResource( 7 )
-anims/jump_side = SubResource( 8 )
+[node name="AnimationPlayer" parent="." index="10"]
+anims/fall_side = ExtResource( 9 )
+anims/jump_side = ExtResource( 8 )
 
 [node name="TipLabel" parent="Tip" index="0"]
 text = "Move: [A] [D]
