@@ -90,6 +90,7 @@ public class Player : KinematicBody2D
         if (targetMotionX != 0f && tipAnimationPlayer != null && !tipAnimationPlayer.IsPlaying())
         {
             tipAnimationPlayer.Play("fade_out");
+            tipAnimationPlayer = null;
         }
 
         if (Input.IsActionJustPressed(JumpInput))
