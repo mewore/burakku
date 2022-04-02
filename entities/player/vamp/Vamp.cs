@@ -12,6 +12,9 @@ public class Vamp : Player
     private const int DAMAGE_RAYCAST_RESOLUTION_MAX = 30;
     private const float DAMAGE_RAYCAST_ANGLE_STEP = Mathf.Pi / DAMAGE_RAYCAST_RESOLUTION_MAX;
 
+    private const float DAMAGE_LIGHT_ENERGY_PER_HIT = .3f;
+    private const float DAMAGE_LIGHT_ENERGY_CHANGE = 1f;
+
     private float hp = 1f;
 
     private List<float> pendingHitAngles = new List<float>();
@@ -31,6 +34,9 @@ public class Vamp : Player
 
     private LineBar hpBar;
 
+    private Light2D damageLight;
+    public Light2D DamageLight { get => damageLight; }
+
     public override void _Ready()
     {
         base._Ready();
@@ -46,6 +52,7 @@ public class Vamp : Player
         }
         damageRay = GetNode<RayCast2D>("DamageRay");
         hpBar = GetNode<LineBar>("HpBar");
+        damageLight = GetNode<Light2D>("DamageLight");
     }
 
     public float CheckForDamage(float delta)
@@ -83,6 +90,12 @@ public class Vamp : Player
                 }
             }
         }
+
+        var targetEnergy = pendingHitAngles.Count * DAMAGE_LIGHT_ENERGY_PER_HIT;
+        var maxEnergyChange = DAMAGE_LIGHT_ENERGY_CHANGE * delta;
+        damageLight.Energy = Mathf.Abs(damageLight.Energy - targetEnergy) < maxEnergyChange
+            ? targetEnergy
+            : damageLight.Energy + Mathf.Sign(targetEnergy - damageLight.Energy) * maxEnergyChange;
 
         hp -= pendingHitAngles.Count * HP_LOST_PER_HIT_PER_SECOND * delta;
         hpBar.Value = hp;

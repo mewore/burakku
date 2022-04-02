@@ -13,7 +13,7 @@ public class Level : Node2D
 
     public void _on_Overlay_FadeOutDone()
     {
-        GetTree().ChangeScene("scenes/" + targetScene + ".tscn");
+        GetTree().ChangeScene(GetScenePath(targetScene));
     }
 
     public void _on_Vamp_Died()
@@ -24,7 +24,16 @@ public class Level : Node2D
 
     public void _on_WinDoor_Won()
     {
-        targetScene = GetTree().CurrentScene.Name.EndsWith("1") ? "Level2" : "Level1";
+        targetScene = "Level" + (GetTree().CurrentScene.Name.Replace("Level", "").ToInt() + 1);
+        if (!new File().FileExists(GetScenePath(targetScene)))
+        {
+            targetScene = "Level1";
+        }
         overlay.FadeOut();
+    }
+
+    private static string GetScenePath(string sceneName)
+    {
+        return "scenes/" + sceneName + ".tscn";
     }
 }

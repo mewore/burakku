@@ -20,7 +20,8 @@ public class Player : KinematicBody2D
     private Vector2 motion = new Vector2();
     public Vector2 Motion { get => motion; }
 
-    private Node2D sprite;
+    private Sprite sprite;
+    private Sprite outlineSprite;
     private AnimationPlayer animationPlayer;
     private AnimationPlayer tipAnimationPlayer;
 
@@ -64,7 +65,8 @@ public class Player : KinematicBody2D
     {
         float jumpHeight = -GetNode<Node2D>("MaxJumpHeight").Position.y;
         jumpSpeed = Mathf.Sqrt(GRAVITY * jumpHeight * 2f);
-        sprite = GetNode<Node2D>("Sprite");
+        sprite = GetNode<Sprite>("Sprite");
+        outlineSprite = GetNode<Sprite>("Sprite/Outline");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         tipAnimationPlayer = GetNode<AnimationPlayer>("Tip/AnimationPlayer");
         doorDetectionShape = GetNode<CollisionShape2D>("DoorDetector/CollisionShape2D");
@@ -73,6 +75,11 @@ public class Player : KinematicBody2D
     public override void _PhysicsProcess(float delta)
     {
         now += delta;
+    }
+
+    public override void _Process(float delta)
+    {
+        outlineSprite.Frame = sprite.Frame;
     }
 
     public void Move(float delta, bool canControl)

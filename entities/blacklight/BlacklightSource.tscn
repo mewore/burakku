@@ -95,8 +95,9 @@ turnedOn = false
 
 [node name="LightPolygon" type="Polygon2D" parent="."]
 visible = false
+light_mask = 0
 material = SubResource( 1 )
-color = Color( 0.14902, 0.0352941, 0.364706, 1 )
+color = Color( 0.14902, 0.0352941, 0.364706, 0.431373 )
 
 [node name="LittleLight" type="Sprite" parent="."]
 use_parent_material = true

@@ -7,8 +7,8 @@
 [ext_resource path="res://entities/player/vamp/states/VampDying.cs" type="Script" id=5]
 [ext_resource path="res://entities/player/vamp/states/VampActive.cs" type="Script" id=6]
 [ext_resource path="res://entities/player/vamp/vamp.png" type="Texture" id=7]
-[ext_resource path="res://entities/player/animations/jump_side.tres" type="Animation" id=8]
-[ext_resource path="res://entities/player/animations/fall_side.tres" type="Animation" id=9]
+[ext_resource path="res://entities/blacklight/light.png" type="Texture" id=8]
+[ext_resource path="res://entities/player/vamp/vamp-outline.png" type="Texture" id=9]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -37,6 +37,30 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../../DeathLight:enabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../../DeathLight:energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 3.0 ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -80,6 +104,30 @@ tracks/2/keys = {
 "method": "Finish"
 } ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("../../DeathLight:energy")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.8, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 3.0, 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../../DeathLight:enabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [node name="Vamp" groups=[
 "vampire",
@@ -92,6 +140,10 @@ hitFireScene = ExtResource( 3 )
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 7 )
 frame = 7
+
+[node name="Outline" parent="Sprite" index="0"]
+self_modulate = Color( 1, 1, 1, 0.72549 )
+texture = ExtResource( 9 )
 
 [node name="Center" type="Position2D" parent="." index="2"]
 position = Vector2( 0, -12 )
@@ -106,6 +158,8 @@ collision_mask = 10
 [node name="DeathFire" type="CPUParticles2D" parent="." index="5"]
 material = SubResource( 1 )
 position = Vector2( 0, -8 )
+z_index = 1
+z_as_relative = false
 emitting = false
 amount = 200
 lifetime = 3.0
@@ -125,16 +179,21 @@ scale_amount_curve = SubResource( 3 )
 color_ramp = SubResource( 4 )
 
 [node name="HpBar" type="Line2D" parent="." index="6"]
+light_mask = 0
 position = Vector2( 0, -40 )
+z_index = 5
+z_as_relative = false
 points = PoolVector2Array( -24, 0, 24, 0 )
+width = 6.0
 default_color = Color( 0, 0, 0, 1 )
 begin_cap_mode = 2
 end_cap_mode = 2
 script = ExtResource( 4 )
 
 [node name="Inner" type="Line2D" parent="HpBar" index="0"]
+light_mask = 0
 points = PoolVector2Array( -24, 0, 24, 0 )
-width = 6.0
+width = 4.0
 
 [node name="Active" parent="StateMachine" index="0"]
 script = ExtResource( 6 )
@@ -146,12 +205,41 @@ script = ExtResource( 5 )
 anims/die = SubResource( 5 )
 anims/stop_burning = SubResource( 6 )
 
-[node name="AnimationPlayer" parent="." index="10"]
-anims/fall_side = ExtResource( 9 )
-anims/jump_side = ExtResource( 8 )
-
 [node name="TipLabel" parent="Tip" index="0"]
 text = "Move: [A] [D]
 Jump: [W]"
+
+[node name="DeathLight" type="Light2D" parent="." index="12"]
+position = Vector2( 0, -16 )
+enabled = false
+texture = ExtResource( 8 )
+texture_scale = 2.0
+color = Color( 1, 0.823529, 0.619608, 1 )
+energy = 0.0
+range_layer_min = -1
+range_layer_max = 1
+shadow_enabled = true
+shadow_gradient_length = 7.2
+shadow_filter = 1
+shadow_filter_smooth = 10.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="DamageLight" type="Light2D" parent="." index="13"]
+position = Vector2( 0, -16 )
+texture = ExtResource( 8 )
+texture_scale = 2.0
+color = Color( 1, 0.823529, 0.619608, 1 )
+energy = 0.0
+range_layer_min = -1
+range_layer_max = 1
+shadow_enabled = true
+shadow_gradient_length = 7.2
+shadow_filter = 1
+shadow_filter_smooth = 10.0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [connection signal="Finished" from="StateMachine/Dying" to="." method="_on_Dying_Finished"]

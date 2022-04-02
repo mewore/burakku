@@ -6,6 +6,7 @@ public class VampDying : VampState
     delegate void Finished();
 
     private const float MAX_MOTION_SQUARED = 20f;
+    private const float ENERGY_DECREASE_PER_SECOND = .5f;
 
     private AnimationPlayer animationPlayer;
     private bool finished = false;
@@ -33,6 +34,7 @@ public class VampDying : VampState
     public override void Process(float delta)
     {
         vamp.ClearFire();
+        vamp.DamageLight.Energy = Mathf.Max(vamp.DamageLight.Energy - ENERGY_DECREASE_PER_SECOND * delta, 0f);
     }
 
     public void Finish()
