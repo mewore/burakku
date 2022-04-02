@@ -13,6 +13,7 @@ public class Overlay : CanvasLayer
     public override void _Ready()
     {
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        GetNode<CanvasItem>("Polygon2D").Visible = true;
     }
 
     public void FadeIn()
@@ -25,13 +26,18 @@ public class Overlay : CanvasLayer
         animationPlayer.Queue("fade_out");
     }
 
+    public void FadeOutReverse()
+    {
+        animationPlayer.Queue("fade_out_reverse");
+    }
+
     public void _on_AnimationPlayer_animation_finished(string animationName)
     {
         if (animationName.Equals("fade_in"))
         {
             EmitSignal(nameof(FadeInDone));
         }
-        else if (animationName.Equals("fade_out"))
+        else if (animationName.StartsWith("fade_out"))
         {
             EmitSignal(nameof(FadeOutDone));
         }
