@@ -14,6 +14,10 @@ config/name="Burakku"
 run/main_scene="res://scenes/MainMenu.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GlobalMusic="*res://audio/GlobalMusic.tscn"
+
 [display]
 
 window/size/width=512

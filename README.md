@@ -42,8 +42,8 @@ Blacklight" is already taken.~~
     - [x] 💙 Save progress and start from the last level or the win screen
     - [x] 💙 Pause menu
     - [x] 💙 Sound settings
-        - [ ] 💙💛 Main menu music
-        - [ ] 💙💛 Level music
+        - [x] 💙💛 Main menu music
+        - [x] 💙💛 Level music
         - [ ] 💙💛 Jump sound
         - [ ] 💙💛 Clear level sound
         - [ ] 💙💛 Vampire death sound
@@ -68,6 +68,7 @@ Blacklight" is already taken.~~
 
 ### Advanced features
 
+- [ ] 💙💛 Better level music
 - [ ] 💙💜 Gradient in the blacklight polygons (the challenge is going to be to reposition the polygon texture properly)
 - [ ] 💜 Main menu art
 - [ ] 💙 Be able to start from a specific level
