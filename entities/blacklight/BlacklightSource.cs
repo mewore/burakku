@@ -49,10 +49,9 @@ public class BlacklightSource : Node2D
         ray = GetNode<RayCast2D>("RayCast2D");
         rayLength = ray.CastTo.Length();
         rayVector = new Vector2(-rayLength, 0f);
-        if (pointsPerNode == null || circlesPerNode == null)
-        {
-            updateRayTargets(GetTree(), ray.CollisionMask);
-        }
+        updateRayTargets(GetTree(), ray.CollisionMask);
+        lightPolygon.Visible = true;
+        UpdateLightPolygon();
     }
 
     private void updateRayTargets(SceneTree tree, uint collisionMask)
@@ -132,6 +131,7 @@ public class BlacklightSource : Node2D
     {
         if (!animationPlayer.IsPlaying() && turnedOn != shouldBeTurnedOn)
         {
+            GD.Print(">> Playing");
             animationPlayer.Play(shouldBeTurnedOn ? "start" : "cease");
         }
     }
@@ -147,7 +147,11 @@ public class BlacklightSource : Node2D
         float littleLightOpacity = Mathf.Clamp(littleLight.Modulate.a + (GD.Randf() - .5f) * 10f * delta, lightPolygon.SelfModulate.a * .7f, lightPolygon.SelfModulate.a);
         littleLight.Modulate = new Color(littleLight.Modulate, littleLightOpacity);
         littleLight.Scale = Vector2.One * (.25f + littleLightOpacity * 1.5f);
+        UpdateLightPolygon();
+    }
 
+    private void UpdateLightPolygon()
+    {
         // Make a list of the necessary raycasting angles
         Vector2 globalPosition = GlobalPosition;
         var angles = new List<float>();

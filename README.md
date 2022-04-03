@@ -38,7 +38,7 @@ Blacklight" is already taken.~~
 - [x] 💜 Simple environment textures
 - [x] 💟 Publish `0.1.1`
 - [x] 💙💜 Better-looking fire and lighting
-- [ ] 💙 Main menu (just "Play")
+- [x] 💙 Main menu (just "Play")
     - [ ] 💙 Save progress and start from the last level or the win screen
     - [ ] 💙 Pause menu
     - [ ] 💙 Sound settings

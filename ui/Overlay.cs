@@ -10,6 +10,8 @@ public class Overlay : CanvasLayer
 
     private AnimationPlayer animationPlayer;
 
+    private ScreenState state = ScreenState.HIDDEN;
+
     public override void _Ready()
     {
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -18,17 +20,26 @@ public class Overlay : CanvasLayer
 
     public void FadeIn()
     {
-        animationPlayer.Queue("fade_in");
+        DoAnimation("fade_in", ScreenState.VISIBLE);
     }
 
     public void FadeOut()
     {
-        animationPlayer.Queue("fade_out");
+        DoAnimation("fade_out", ScreenState.HIDDEN);
     }
 
     public void FadeOutReverse()
     {
-        animationPlayer.Queue("fade_out_reverse");
+        DoAnimation("fade_out_reverse", ScreenState.HIDDEN);
+    }
+
+    private void DoAnimation(string animationName, ScreenState targetState)
+    {
+        if (state != targetState)
+        {
+            state = targetState;
+            animationPlayer.Queue(animationName);
+        }
     }
 
     public void _on_AnimationPlayer_animation_finished(string animationName)
@@ -42,4 +53,10 @@ public class Overlay : CanvasLayer
             EmitSignal(nameof(FadeOutDone));
         }
     }
+}
+
+enum ScreenState
+{
+    VISIBLE,
+    HIDDEN
 }

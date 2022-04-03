@@ -9,28 +9,47 @@
 [ext_resource path="res://scenes/Level.cs" type="Script" id=8]
 
 [node name="Level" type="Node2D"]
+pause_mode = 2
 script = ExtResource( 8 )
 
-[node name="Doors" type="Node2D" parent="."]
+[node name="Game" type="Node2D" parent="."]
+pause_mode = 1
 
-[node name="WinDoor" parent="." instance=ExtResource( 6 )]
+[node name="Doors" type="Node2D" parent="Game"]
+
+[node name="WinDoor" parent="Game" instance=ExtResource( 6 )]
 position = Vector2( 456, 280 )
 
-[node name="World" type="StaticBody2D" parent="." groups=[
+[node name="World" type="StaticBody2D" parent="Game" groups=[
 "opaque",
 ]]
 collision_layer = 3
 collision_mask = 4
 
-[node name="Blacklights" type="Node2D" parent="."]
+[node name="Blacklights" type="Node2D" parent="Game"]
 
-[node name="Blacklight" parent="." instance=ExtResource( 1 )]
+[node name="Blacklight" parent="Game" instance=ExtResource( 1 )]
 position = Vector2( 264, 280 )
 
-[node name="Vamp" parent="." instance=ExtResource( 2 )]
+[node name="Vamp" parent="Game" instance=ExtResource( 2 )]
 position = Vector2( 312, 80 )
 
-[node name="Buttons" type="Node2D" parent="."]
+[node name="Buttons" type="Node2D" parent="Game"]
+
+[node name="AmbientLight" type="Light2D" parent="Game"]
+visible = false
+position = Vector2( 256, 160 )
+enabled = false
+texture = ExtResource( 4 )
+texture_scale = 3.0
+color = Color( 0.85098, 0.74902, 1, 1 )
+energy = 0.5
+mode = 3
+range_layer_min = -1
+range_layer_max = 1
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Overlay" parent="." instance=ExtResource( 7 )]
 
@@ -46,25 +65,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="CanvasModulate" type="CanvasModulate" parent="Background"]
-
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-
-[node name="AmbientLight" type="Light2D" parent="."]
-visible = false
-position = Vector2( 256, 160 )
-enabled = false
-texture = ExtResource( 4 )
-texture_scale = 3.0
-color = Color( 0.85098, 0.74902, 1, 1 )
-energy = 0.5
-mode = 3
-range_layer_min = -1
-range_layer_max = 1
-__meta__ = {
-"_edit_lock_": true
-}
-
-[connection signal="Won" from="WinDoor" to="." method="_on_WinDoor_Won"]
-[connection signal="Died" from="Vamp" to="." method="_on_Vamp_Died"]
+[connection signal="Won" from="Game/WinDoor" to="." method="_on_WinDoor_Won"]
+[connection signal="Died" from="Game/Vamp" to="." method="_on_Vamp_Died"]
+[connection signal="FadeInDone" from="Overlay" to="." method="_on_Overlay_FadeInDone"]
 [connection signal="FadeOutDone" from="Overlay" to="." method="_on_Overlay_FadeOutDone"]

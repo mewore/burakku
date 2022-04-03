@@ -12,7 +12,6 @@ inputSuffix = "second"
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 4 )
-frame = 6
 
 [node name="Outline" parent="Sprite" index="0"]
 texture = ExtResource( 5 )

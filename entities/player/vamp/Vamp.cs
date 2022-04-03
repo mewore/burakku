@@ -69,23 +69,28 @@ public class Vamp : Player
             {
                 continue;
             }
-            var squaredDistanceToTarget = blacklightSource.GlobalPosition.DistanceSquaredTo(GlobalPosition);
+            Vector2 centerPosition = ToGlobal(center);
+            var squaredDistanceToTarget = blacklightSource.GlobalPosition.DistanceSquaredTo(centerPosition);
+            float anglePerStep = Mathf.Tau / DAMAGE_RAYCAST_RESOLUTION_MAX;
             if (squaredDistanceToTarget < squaredRadius)
             {
-                // Instant death
-                hp = -1f;
+                float angle = 0f;
+                for (int hitIndex = 0; hitIndex < DAMAGE_RAYCAST_RESOLUTION_MAX; hitIndex++, angle += anglePerStep)
+                {
+                    RegisterHit(angle, 1f);
+                }
                 continue;
             }
-            var angleToCenter = blacklightSource.GlobalPosition.AngleToPoint(GlobalPosition);
+            var angleToCenter = blacklightSource.GlobalPosition.AngleToPoint(centerPosition);
             var angleVariation = Mathf.Atan2(radius, Mathf.Sqrt(squaredDistanceToTarget - squaredRadius));
             float minAngle = -angleVariation;
             float maxAngle = angleVariation;
             int steps = Mathf.Clamp((int)((maxAngle - minAngle) / DAMAGE_RAYCAST_ANGLE_STEP), DAMAGE_RAYCAST_RESOLUTION_MIN, DAMAGE_RAYCAST_RESOLUTION_MAX);
 
-            Vector2 centerCastTo = blacklightSource.ToLocal(ToGlobal(center)).Normalized() * blacklightSource.RayLength;
+            Vector2 centerCastTo = blacklightSource.ToLocal(centerPosition).Normalized() * blacklightSource.RayLength;
             float castToLength = centerCastTo.Length();
             damageRay.Position = ToLocal(blacklightSource.GlobalPosition);
-            float anglePerStep = (maxAngle - minAngle) / Mathf.Max(1, steps - 1);
+            anglePerStep = (maxAngle - minAngle) / Mathf.Max(1, steps - 1);
             float offsetAngle = minAngle;
             for (int rayIndex = 0; rayIndex < steps; rayIndex++, offsetAngle += anglePerStep)
             {
@@ -93,7 +98,7 @@ public class Vamp : Player
                 damageRay.ForceRaycastUpdate();
                 if (damageRay.IsColliding() && damageRay.GetCollider() == this)
                 {
-                    registerHit(damageRay.GetCollisionPoint(), Mathf.Abs(damageRay.GetCollisionNormal().Dot(damageRay.CastTo) / castToLength));
+                    RegisterHit(damageRay.GetCollisionPoint(), Mathf.Abs(damageRay.GetCollisionNormal().Dot(damageRay.CastTo) / castToLength));
                 }
             }
         }
@@ -152,9 +157,14 @@ public class Vamp : Player
         damagePseudoLight.Visible = damagePseudoLight.Modulate.a > .01f;
     }
 
-    public void registerHit(Vector2 hitPosition, float parallel)
+    public void RegisterHit(Vector2 hitPosition, float parallel)
     {
-        pendingHits.Add((ToGlobal(center).AngleToPoint(hitPosition) + Mathf.Pi, parallel));
+        RegisterHit(ToGlobal(center).AngleToPoint(hitPosition) + Mathf.Pi, parallel);
+    }
+
+    public void RegisterHit(float angle, float parallel)
+    {
+        pendingHits.Add((angle, parallel));
     }
 
     public void _on_Dying_Finished()

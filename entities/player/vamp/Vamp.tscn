@@ -11,25 +11,25 @@
 [ext_resource path="res://entities/player/vamp/vamp-outline.png" type="Texture" id=9]
 [ext_resource path="res://entities/player/vamp/fire-particle.png" type="Texture" id=10]
 
-[sub_resource type="CanvasItemMaterial" id=7]
-blend_mode = 1
-
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
 
-[sub_resource type="Curve" id=2]
+[sub_resource type="CanvasItemMaterial" id=2]
+blend_mode = 1
+
+[sub_resource type="Curve" id=3]
 min_value = -5.0
 max_value = 0.0
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, -5 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Curve" id=3]
+[sub_resource type="Curve" id=4]
 _data = [ Vector2( 0, 0.32974 ), 0.0, 0.0, 0, 0, Vector2( 0.596899, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.252094 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=5]
 offsets = PoolRealArray( 0, 0.161702, 1 )
 colors = PoolColorArray( 1, 0.646616, 0, 0, 0.953125, 0.581805, 0.111694, 1, 0.425515, 0, 0, 0 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 tracks/0/type = "value"
 tracks/0/path = NodePath("../../DeathFire:emitting")
 tracks/0/interp = 1
@@ -91,8 +91,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "stop_burning"
+[sub_resource type="Animation" id=7]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("../../Sprite:modulate")
@@ -191,7 +190,6 @@ hitFireScene = ExtResource( 3 )
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 7 )
-frame = 7
 
 [node name="Outline" parent="Sprite" index="0"]
 self_modulate = Color( 1, 1, 1, 0.72549 )
@@ -202,7 +200,8 @@ position = Vector2( 0, -12 )
 
 [node name="DamagePseudoLight" type="Node2D" parent="Center" index="0"]
 visible = false
-material = SubResource( 7 )
+modulate = Color( 1, 1, 1, 0 )
+material = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -230,7 +229,7 @@ exclude_parent = false
 collision_mask = 10
 
 [node name="DeathFire" type="CPUParticles2D" parent="." index="5"]
-material = SubResource( 1 )
+material = SubResource( 2 )
 position = Vector2( 0, -8 )
 z_index = 1
 z_as_relative = false
@@ -248,14 +247,15 @@ spread = 180.0
 gravity = Vector2( 0, -40 )
 angular_velocity = 20.0
 radial_accel = -3.29
-radial_accel_curve = SubResource( 2 )
+radial_accel_curve = SubResource( 3 )
 angle = 180.0
 angle_random = 1.0
 scale_amount = 3.0
-scale_amount_curve = SubResource( 3 )
-color_ramp = SubResource( 4 )
+scale_amount_curve = SubResource( 4 )
+color_ramp = SubResource( 5 )
 
 [node name="HpBar" type="Line2D" parent="." index="6"]
+visible = false
 light_mask = 0
 position = Vector2( 0, -40 )
 z_index = 5
@@ -279,8 +279,8 @@ script = ExtResource( 6 )
 script = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="StateMachine/Dying" index="0"]
-anims/die = SubResource( 5 )
-anims/stop_burning = SubResource( 6 )
+anims/die = SubResource( 6 )
+anims/stop_burning = SubResource( 7 )
 
 [node name="TipLabel" parent="Tip" index="0"]
 text = "Move: [A] [D]

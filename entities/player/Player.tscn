@@ -9,17 +9,16 @@
 [ext_resource path="res://entities/player/animations/jump_side.tres" type="Animation" id=7]
 [ext_resource path="res://entities/player/animations/fall_side.tres" type="Animation" id=8]
 
-[sub_resource type="CanvasItemMaterial" id=8]
+[sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=2]
 radius = 8.0
 height = 8.0
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=3]
 
-[sub_resource type="Animation" id=3]
-resource_name = "enter_door"
+[sub_resource type="Animation" id=4]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -82,8 +81,7 @@ tracks/4/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "fall"
+[sub_resource type="Animation" id=5]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -98,8 +96,7 @@ tracks/0/keys = {
 "values": [ 6 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "jump"
+[sub_resource type="Animation" id=6]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -114,7 +111,7 @@ tracks/0/keys = {
 "values": [ 5 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -179,7 +176,7 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -214,18 +211,17 @@ script = ExtResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -16 )
 hframes = 9
-frame = 1
 
 [node name="Outline" type="Sprite" parent="Sprite"]
 visible = false
 self_modulate = Color( 1, 1, 1, 0.501961 )
 light_mask = 0
-material = SubResource( 8 )
+material = SubResource( 1 )
 hframes = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -12 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="MaxJumpHeight" type="Position2D" parent="."]
 position = Vector2( 0, -48 )
@@ -246,16 +242,16 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorDetector"]
 position = Vector2( 0, -8 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/enter_door = SubResource( 3 )
-anims/fall = SubResource( 4 )
+anims/enter_door = SubResource( 4 )
+anims/fall = SubResource( 5 )
 anims/fall_side = ExtResource( 8 )
 anims/idle = ExtResource( 5 )
-anims/jump = SubResource( 5 )
+anims/jump = SubResource( 6 )
 anims/jump_side = ExtResource( 7 )
-anims/leave_door = SubResource( 6 )
+anims/leave_door = SubResource( 7 )
 anims/walk = ExtResource( 6 )
 
 [node name="Tip" type="Node2D" parent="."]
@@ -278,7 +274,7 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Tip"]
-anims/fade_out = SubResource( 7 )
+anims/fade_out = SubResource( 8 )
 
 [connection signal="area_entered" from="DoorDetector" to="." method="_on_DoorDetector_area_entered"]
 [connection signal="area_exited" from="DoorDetector" to="." method="_on_DoorDetector_area_exited"]

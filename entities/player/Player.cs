@@ -10,11 +10,13 @@ public class Player : KinematicBody2D
     private const float MAX_FALL_SPEED = 300f;
     private const float GRAVITY = 600f;
 
+    private float now = 0f;
+
     private float jumpSpeed;
     private const float JUMP_SPEED_RETENTION = .5f;
     private const float JUMP_GRACE_PERIOD = .1f;
     private float lastWantedToJumpAt = -JUMP_GRACE_PERIOD * 2f;
-    private float lastOnFloorAt = -JUMP_GRACE_PERIOD * 2f;
+    private float lastOnFloorAt = 0f;
     private bool isJumping = false;
 
     private Vector2 motion = new Vector2();
@@ -24,8 +26,6 @@ public class Player : KinematicBody2D
     private Sprite outlineSprite;
     private AnimationPlayer animationPlayer;
     private AnimationPlayer tipAnimationPlayer;
-
-    private float now = 0f;
 
     private const float DOOR_ENTER_GRACE_PERIOD = .05f;
     private WinDoor door;

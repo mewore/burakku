@@ -2,38 +2,50 @@ using Godot;
 
 public class Level : Node2D
 {
-    private string targetScene;
     private Overlay overlay;
+    private int currentLevel;
 
     public override void _Ready()
     {
         overlay = GetNode<Overlay>("Overlay");
         overlay.FadeIn();
+        GetTree().Paused = true;
+        currentLevel = Global.CurrentLevel;
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event.IsActionPressed("debug_clear_level"))
+        {
+            WinLevel();
+        }
+    }
+
+    public void _on_Overlay_FadeInDone()
+    {
+        GetTree().Paused = false;
     }
 
     public void _on_Overlay_FadeOutDone()
     {
-        GetTree().ChangeScene(GetScenePath(targetScene));
+        GetTree().ChangeScene(Global.CurrentLevelPath);
     }
 
     public void _on_Vamp_Died()
     {
-        targetScene = GetTree().CurrentScene.Name;
+        GetTree().Paused = true;
         overlay.FadeOutReverse();
     }
 
     public void _on_WinDoor_Won()
     {
-        targetScene = "Level" + (GetTree().CurrentScene.Name.Replace("Level", "").ToInt() + 1);
-        if (!new File().FileExists(GetScenePath(targetScene)))
-        {
-            targetScene = "Level1";
-        }
-        overlay.FadeOut();
+        WinLevel();
     }
 
-    private static string GetScenePath(string sceneName)
+    private void WinLevel()
     {
-        return "res://scenes/" + sceneName + ".tscn";
+        GetTree().Paused = true;
+        Global.WinLevel(currentLevel);
+        overlay.FadeOut();
     }
 }
