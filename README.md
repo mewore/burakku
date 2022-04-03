@@ -39,7 +39,7 @@ Blacklight" is already taken.~~
 - [x] 💟 Publish `0.1.1`
 - [x] 💙💜 Better-looking fire and lighting
 - [x] 💙 Main menu (just "Play")
-    - [ ] 💙 Save progress and start from the last level or the win screen
+    - [x] 💙 Save progress and start from the last level or the win screen
     - [ ] 💙 Pause menu
     - [ ] 💙 Sound settings
         - [ ] 💙💛 Main menu music

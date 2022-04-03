@@ -3,19 +3,42 @@ using Godot;
 public class MainMenu : Node2D
 {
     private Button playButton;
+    private Button continueButton;
     private string targetScene;
     private Overlay overlay;
 
     public override void _Ready()
     {
         playButton = GetNode<Button>("Container/VBoxContainer/PlayButton");
+        continueButton = GetNode<Button>("Container/VBoxContainer/ContinueButton");
         overlay = GetNode<Overlay>("Overlay");
         overlay.FadeIn();
+        if (!Global.LoadBestLevel())
+        {
+            continueButton.Disabled = true;
+        }
+        else
+        {
+            continueButton.Text += " from level " + Global.BestLevel;
+        }
     }
 
     public void _on_PlayButton_pressed()
     {
+        Global.SetLevelToFirst();
+        FadeOut();
+    }
+
+    public void _on_ContinueButton_pressed()
+    {
+        Global.SetLevelToBest();
+        FadeOut();
+    }
+
+    private void FadeOut()
+    {
         playButton.Disabled = true;
+        continueButton.Disabled = true;
         overlay.FadeOut();
     }
 

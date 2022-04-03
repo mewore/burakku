@@ -21,7 +21,8 @@ public class Global : Node
     private static string currentLevelPath = GetLevelScenePath(currentLevel);
     public static string CurrentLevelPath { get => currentLevelPath; }
 
-    private static int bestLevel = currentLevel;
+    private static int bestLevel = FIRST_LEVEL;
+    public static int BestLevel { get => bestLevel; }
 
     public override void _Ready()
     {
@@ -29,6 +30,18 @@ public class Global : Node
         // {
         //     settings.initialize_from_dictionary(load_data(SETTINGS_SAVE_FILE));
         // }
+    }
+
+    public static void SetLevelToBest()
+    {
+        currentLevel = bestLevel;
+        currentLevelPath = GetLevelScenePath(currentLevel);
+    }
+
+    public static void SetLevelToFirst()
+    {
+        currentLevel = FIRST_LEVEL;
+        currentLevelPath = GetLevelScenePath(currentLevel);
     }
 
     public static void WinLevel(int level)
@@ -41,13 +54,12 @@ public class Global : Node
             ++currentLevel;
             currentLevelPath = nextLevelPath;
             bestLevel = Mathf.Max(bestLevel, currentLevel);
+            SaveData(bestLevel);
         }
         else
         {
-            currentLevel = FIRST_LEVEL;
-            currentLevelPath = GetLevelScenePath(currentLevel);
+            SetLevelToFirst();
         }
-        GD.Print(lastLevel, " -> ", currentLevel);
     }
 
     private static string GetLevelScenePath(int level)
@@ -62,17 +74,17 @@ public class Global : Node
         SaveData("bestLevel", data);
     }
 
-    public static int LoadBestLevel()
+    public static bool LoadBestLevel()
     {
         var data = LoadData("bestLevel");
         if (data == null)
         {
             GD.Print("data is null");
-            return 0;
+            return false;
         }
         object result = data["bestLevel"];
         bestLevel = result == null ? FIRST_LEVEL : (int)((System.Single)result);
-        return bestLevel;
+        return true;
     }
 
     void SaveSettings()
