@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 
@@ -10,9 +11,12 @@ public class Global : Node
     private const string SETTINGS_SAVE_FILE = "settings";
     private const string DEFAULT_SAVE_FILE = "default";
 
+    private const string BEST_LEVEL_KEY = "bestLevel";
 
-    private Dictionary<string, object> settings = new Dictionary<string, object>();
-    // var game_data: Dictionary = {}
+    private const string MASTER_VOLUME_KEY = "masterVolume";
+    private const string SFX_VOLUME_KEY = "sfxVolume";
+    private const string MUSIC_VOLUME_KEY = "musicVolume";
+    private const string QUALITY_KEY = "quality";
 
     private const int FIRST_LEVEL = 1;
     private static int currentLevel = FIRST_LEVEL;
@@ -26,6 +30,11 @@ public class Global : Node
 
     private static bool hasBeatenAllLevels = false;
     public static bool HasBeatenAllLevels { get => hasBeatenAllLevels; }
+
+    private static GameSettings settings;
+    public static GameSettings Settings { get => settings; }
+
+    public static bool ReturningToMenu = false;
 
     public override void _Ready()
     {
@@ -57,7 +66,7 @@ public class Global : Node
             ++currentLevel;
             currentLevelPath = nextLevelPath;
             bestLevel = Mathf.Max(bestLevel, currentLevel);
-            SaveData(bestLevel);
+            SaveBestLevel(bestLevel);
             return true;
         }
         hasBeatenAllLevels = true;
@@ -70,34 +79,70 @@ public class Global : Node
         return "res://scenes/Level" + level + ".tscn";
     }
 
-    public static void SaveData(int bestLevel)
+    public static void SaveBestLevel(int bestLevel)
     {
         var data = new Dictionary<string, object>();
-        data.Add("bestLevel", bestLevel);
-        SaveData("bestLevel", data);
+        data.Add(BEST_LEVEL_KEY, bestLevel);
+        SaveData(BEST_LEVEL_KEY, data);
     }
 
     public static bool LoadBestLevel()
     {
-        var data = LoadData("bestLevel");
+        var data = LoadData(BEST_LEVEL_KEY);
         if (data == null)
         {
-            GD.Print("data is null");
             return false;
         }
-        object result = data["bestLevel"];
-        bestLevel = result == null ? FIRST_LEVEL : (int)((System.Single)result);
+        object result = data[BEST_LEVEL_KEY];
+        bestLevel = result == null ? FIRST_LEVEL : Convert.ToInt32(result);
         return true;
     }
 
-    void SaveSettings()
+    public static void SaveSettings()
     {
-        SaveData(SETTINGS_SAVE_FILE, settings);
+        var data = new Dictionary<string, object>();
+        data.Add(MASTER_VOLUME_KEY, settings.MasterVolume);
+        data.Add(SFX_VOLUME_KEY, settings.SfxVolume);
+        data.Add(MUSIC_VOLUME_KEY, settings.MusicVolume);
+        data.Add(QUALITY_KEY, (int)settings.Quality);
+        SaveData(SETTINGS_SAVE_FILE, data);
+    }
+
+    public static void LoadSettings()
+    {
+        if (settings != null)
+        {
+            return;
+        }
+        var data = LoadData(SETTINGS_SAVE_FILE);
+        settings = new GameSettings();
+        if (data == null)
+        {
+            return;
+        }
+
+        // Generally ignoring exceptions like this is a bad idea, but keys not being present is to be expected;
+
+        try { settings.MasterVolume = Convert.ToInt32(data[MASTER_VOLUME_KEY]); }
+        catch (KeyNotFoundException) { }
+
+        try { settings.SfxVolume = Convert.ToInt32(data[SFX_VOLUME_KEY]); }
+        catch (KeyNotFoundException) { }
+
+        try { settings.MusicVolume = Convert.ToInt32(data[MUSIC_VOLUME_KEY]); }
+        catch (KeyNotFoundException) { }
+
+        try { settings.Quality = (GameQuality)(Convert.ToInt32(data[QUALITY_KEY])); }
+        catch (InvalidCastException)
+        {
+            GD.PushError(String.Format("Failed to cast the raw quality value '{0}' to a GameQuality enum", data["quality"]));
+        }
+        catch (KeyNotFoundException) { }
     }
 
     private static void SaveData(string save_name, Dictionary<string, object> data)
     {
-        var path = GetSaveFilePath(save_name);
+        var path = GetUserJsonFilePath(save_name);
         // LOG.info("Saving data to: %s" % path);
         var file = new File();
         var openError = file.Open(path, File.ModeFlags.Write);
@@ -141,9 +186,9 @@ public class Global : Node
         return nodes.Count > 0 ? (Node)nodes[0] : null;
     }
 
-    private Godot.Directory OpenSaveDirectory()
+    private Directory OpenSaveDirectory()
     {
-        var dir = new Godot.Directory();
+        var dir = new Directory();
         // LOG.check_error_code(dir.open(SAVE_DIRECTORY), "Opening " + SAVE_DIRECTORY);
         return dir;
     }
@@ -166,13 +211,13 @@ public class Global : Node
 
     private static bool SaveFileExists(string save_name)
     {
-        var path = GetSaveFilePath(save_name);
+        var path = GetUserJsonFilePath(save_name);
         return new File().FileExists(path);
     }
 
-    private static Godot.Collections.Dictionary LoadData(string save_name)
+    private static Godot.Collections.Dictionary LoadData(string fileName)
     {
-        var path = GetSaveFilePath(save_name);
+        var path = GetUserJsonFilePath(fileName);
         var file = new File();
         if (!file.FileExists(path))
         {
@@ -189,13 +234,32 @@ public class Global : Node
         }
         else
         {
-            // LOG.error("Corrupted savegame data in file '%s'!" % path);
+            GD.PushWarning(String.Format("Corrupted data in file '{0}'!", path));
             return null;
         }
     }
 
-    private static string GetSaveFilePath(string save_name)
+    private static string GetUserJsonFilePath(string save_name)
     {
-        return SAVE_DIRECTORY + "/" + SAVE_FILE_PREFIX + save_name + SAVE_FILE_SUFFIX;
+        return SAVE_DIRECTORY + save_name + ".json";
     }
+}
+
+public class GameSettings
+{
+    public int MasterVolume = 0;
+    public float NormalizedMasterVolume { get => MasterVolume * .01f; }
+
+    public int SfxVolume = 0;
+    public float NormalizedSfxVolume { get => SfxVolume * .01f; }
+
+    public int MusicVolume = 0;
+    public float NormalizedMusicVolume { get => MusicVolume * .01f; }
+
+    public GameQuality Quality = GameQuality.MEDIUM;
+}
+
+public enum GameQuality
+{
+    LOW, MEDIUM, HIGH
 }

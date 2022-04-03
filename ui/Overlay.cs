@@ -25,6 +25,11 @@ public class Overlay : CanvasLayer
         DoAnimation("fade_in", ScreenState.VISIBLE);
     }
 
+    public void FadeInReverse()
+    {
+        DoAnimation("fade_in_reverse", ScreenState.VISIBLE);
+    }
+
     public void FadeOut()
     {
         DoAnimation("fade_out", ScreenState.HIDDEN);
@@ -46,7 +51,7 @@ public class Overlay : CanvasLayer
 
     public void _on_AnimationPlayer_animation_finished(string animationName)
     {
-        if (animationName.Equals("fade_in"))
+        if (animationName.StartsWith("fade_in"))
         {
             EmitSignal(nameof(FadeInDone));
         }

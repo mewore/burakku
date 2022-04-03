@@ -6,6 +6,7 @@ public class MainMenu : Node2D
     private Button continueButton;
     private string targetScene;
     private Overlay overlay;
+    private SoundControl soundControl;
 
     public override void _Ready()
     {
@@ -13,7 +14,15 @@ public class MainMenu : Node2D
         playButton = container.GetNode<Button>("PlayButton");
         continueButton = container.GetNode<Button>("ContinueButton");
         overlay = GetNode<Overlay>("Overlay");
-        overlay.FadeIn();
+        if (Global.ReturningToMenu)
+        {
+            overlay.FadeInReverse();
+            Global.ReturningToMenu = false;
+        }
+        else
+        {
+            overlay.FadeIn();
+        }
         if (!Global.LoadBestLevel())
         {
             continueButton.Disabled = true;
@@ -23,6 +32,7 @@ public class MainMenu : Node2D
             continueButton.Text += " from level " + Global.BestLevel;
         }
         container.GetNode<CanvasItem>("WinLabel").Visible = Global.HasBeatenAllLevels;
+        soundControl = container.GetNode<SoundControl>("SoundControl");
     }
 
     public void _on_PlayButton_pressed()
@@ -41,6 +51,7 @@ public class MainMenu : Node2D
     {
         playButton.Disabled = true;
         continueButton.Disabled = true;
+        soundControl.Editable = false;
         overlay.FadeOut();
     }
 

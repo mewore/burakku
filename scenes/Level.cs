@@ -44,6 +44,7 @@ public class Level : Node2D
 
     public void _on_Overlay_FadeOutDone()
     {
+        pauseMenu.Visible = paused = false;
         if (targetScene != null)
         {
             GetTree().ChangeScene(targetScene);
@@ -76,14 +77,13 @@ public class Level : Node2D
 
     public void _on_RestartLevel_pressed()
     {
-        pauseMenu.Visible = paused = false;
         targetScene = Global.CurrentLevelPath;
         overlay.FadeOutReverse();
     }
 
     public void _on_ReturnToMenu_pressed()
     {
-        pauseMenu.Visible = paused = false;
+        Global.ReturningToMenu = true;
         targetScene = MAIN_MENU_PATH;
         overlay.FadeOutReverse();
     }

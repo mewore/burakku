@@ -41,7 +41,7 @@ Blacklight" is already taken.~~
 - [x] 💙 Main menu (just "Play")
     - [x] 💙 Save progress and start from the last level or the win screen
     - [x] 💙 Pause menu
-    - [ ] 💙 Sound settings
+    - [x] 💙 Sound settings
         - [ ] 💙💛 Main menu music
         - [ ] 💙💛 Level music
         - [ ] 💙💛 Jump sound
