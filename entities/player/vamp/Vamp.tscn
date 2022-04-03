@@ -60,7 +60,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0.1, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.0, 3.0 ]
+"values": [ 0.0, 1.0 ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -114,7 +114,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0.8, 3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 3.0, 0.0 ]
+"values": [ 1.0, 0.0 ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("../../DeathLight:enabled")
@@ -210,6 +210,7 @@ text = "Move: [A] [D]
 Jump: [W]"
 
 [node name="DeathLight" type="Light2D" parent="." index="12"]
+visible = false
 position = Vector2( 0, -16 )
 enabled = false
 texture = ExtResource( 8 )
@@ -227,7 +228,9 @@ __meta__ = {
 }
 
 [node name="DamageLight" type="Light2D" parent="." index="13"]
+visible = false
 position = Vector2( 0, -16 )
+enabled = false
 texture = ExtResource( 8 )
 texture_scale = 2.0
 color = Color( 1, 0.823529, 0.619608, 1 )

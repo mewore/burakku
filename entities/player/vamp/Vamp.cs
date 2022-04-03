@@ -91,12 +91,6 @@ public class Vamp : Player
             }
         }
 
-        var targetEnergy = pendingHitAngles.Count * DAMAGE_LIGHT_ENERGY_PER_HIT;
-        var maxEnergyChange = DAMAGE_LIGHT_ENERGY_CHANGE * delta;
-        damageLight.Energy = Mathf.Abs(damageLight.Energy - targetEnergy) < maxEnergyChange
-            ? targetEnergy
-            : damageLight.Energy + Mathf.Sign(targetEnergy - damageLight.Energy) * maxEnergyChange;
-
         hp -= pendingHitAngles.Count * HP_LOST_PER_HIT_PER_SECOND * delta;
         hpBar.Value = hp;
         hpBar.Visible = hp > 0f && hp < 1f;

@@ -34,6 +34,6 @@ public class Level : Node2D
 
     private static string GetScenePath(string sceneName)
     {
-        return "scenes/" + sceneName + ".tscn";
+        return "res://scenes/" + sceneName + ".tscn";
     }
 }

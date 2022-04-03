@@ -36,7 +36,7 @@ Blacklight" is already taken.~~
 - [x] 💜 Simple vampire sprite
 - [x] 💜 Simple blacklight character sprite
 - [x] 💜 Simple environment textures
-- [ ] 💟 Publish `0.1.1`
+- [x] 💟 Publish `0.1.1`
 - [ ] 💙 Main menu (just "Play")
     - [ ] 💙 Save progress and start from the last level or the win screen
     - [ ] 💙 Pause menu
@@ -57,6 +57,9 @@ Blacklight" is already taken.~~
 - [ ] 💚 Some proper levels
 - [ ] 💟 Publish `0.1.3`
 - [ ] 💜 Environment art
+- [ ] 💜 Banner art
+- [ ] 💜 Icon
+- [ ] 💜 Logo
 - [ ] 💟 Publish `0.2.0`
 
 ### Advanced features

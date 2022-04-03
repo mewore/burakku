@@ -124,10 +124,6 @@ public class BlacklightSource : Node2D
                 {
                     pointsPerNode.Add(childNode, ((CollisionPolygon2D)childNode).Polygon);
                 }
-                else
-                {
-                    GD.PushWarning("Node " + childNode.GetPath() + " is neither a collision shape nor a collision polygon");
-                }
             }
         }
     }

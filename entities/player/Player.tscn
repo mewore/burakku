@@ -217,6 +217,7 @@ hframes = 9
 frame = 1
 
 [node name="Outline" type="Sprite" parent="Sprite"]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.501961 )
 light_mask = 0
 material = SubResource( 8 )
