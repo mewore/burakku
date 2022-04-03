@@ -2,50 +2,89 @@ using Godot;
 
 public class Level : Node2D
 {
+    private const string MAIN_MENU_PATH = "res://scenes/MainMenu.tscn";
+
     private Overlay overlay;
     private int currentLevel;
+    bool paused = false;
+    string targetScene;
+
+    private CanvasItem pauseMenu;
 
     public override void _Ready()
     {
         overlay = GetNode<Overlay>("Overlay");
+        pauseMenu = GetNode<CanvasItem>("PauseUi/PauseMenu");
         overlay.FadeIn();
-        GetTree().Paused = true;
         currentLevel = Global.CurrentLevel;
+    }
+
+    public override void _Process(float delta)
+    {
+        GetTree().Paused = overlay.Transitioning || paused;
     }
 
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event.IsActionPressed("debug_clear_level"))
         {
-            WinLevel();
+            if (OS.IsDebugBuild())
+            {
+                WinLevel();
+            }
         }
-    }
-
-    public void _on_Overlay_FadeInDone()
-    {
-        GetTree().Paused = false;
+        else if (@event.IsActionPressed("pause"))
+        {
+            if (!overlay.Transitioning)
+            {
+                pauseMenu.Visible = paused = !paused;
+            }
+        }
     }
 
     public void _on_Overlay_FadeOutDone()
     {
-        GetTree().ChangeScene(Global.CurrentLevelPath);
+        if (targetScene != null)
+        {
+            GetTree().ChangeScene(targetScene);
+        }
+        else
+        {
+            GD.PushWarning("No target scene is set. Reloading the current scene as a fallback");
+            GetTree().ReloadCurrentScene();
+        }
     }
 
-    public void _on_Vamp_Died()
+    public void _on_Vamp_Died() => LoseLevel();
+    public void _on_WinDoor_Won() => WinLevel();
+
+    private void LoseLevel()
     {
-        GetTree().Paused = true;
         overlay.FadeOutReverse();
-    }
-
-    public void _on_WinDoor_Won()
-    {
-        WinLevel();
     }
 
     private void WinLevel()
     {
-        GetTree().Paused = true;
-        Global.WinLevel(currentLevel);
+        targetScene = Global.WinLevel(currentLevel) ? Global.CurrentLevelPath : MAIN_MENU_PATH;
         overlay.FadeOut();
+    }
+
+    public void _on_Resume_pressed()
+    {
+        pauseMenu.Visible = paused = false;
+    }
+
+    public void _on_RestartLevel_pressed()
+    {
+        pauseMenu.Visible = paused = false;
+        targetScene = Global.CurrentLevelPath;
+        overlay.FadeOutReverse();
+    }
+
+    public void _on_ReturnToMenu_pressed()
+    {
+        pauseMenu.Visible = paused = false;
+        targetScene = MAIN_MENU_PATH;
+        overlay.FadeOutReverse();
     }
 }

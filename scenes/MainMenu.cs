@@ -9,8 +9,9 @@ public class MainMenu : Node2D
 
     public override void _Ready()
     {
-        playButton = GetNode<Button>("Container/VBoxContainer/PlayButton");
-        continueButton = GetNode<Button>("Container/VBoxContainer/ContinueButton");
+        var container = GetNode<Node>("Container/VBoxContainer");
+        playButton = container.GetNode<Button>("PlayButton");
+        continueButton = container.GetNode<Button>("ContinueButton");
         overlay = GetNode<Overlay>("Overlay");
         overlay.FadeIn();
         if (!Global.LoadBestLevel())
@@ -21,6 +22,7 @@ public class MainMenu : Node2D
         {
             continueButton.Text += " from level " + Global.BestLevel;
         }
+        container.GetNode<CanvasItem>("WinLabel").Visible = Global.HasBeatenAllLevels;
     }
 
     public void _on_PlayButton_pressed()

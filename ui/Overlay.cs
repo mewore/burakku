@@ -12,6 +12,8 @@ public class Overlay : CanvasLayer
 
     private ScreenState state = ScreenState.HIDDEN;
 
+    public bool Transitioning { get => animationPlayer.IsPlaying() || animationPlayer.GetQueue().Length > 0; }
+
     public override void _Ready()
     {
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");

@@ -40,7 +40,7 @@ Blacklight" is already taken.~~
 - [x] 💙💜 Better-looking fire and lighting
 - [x] 💙 Main menu (just "Play")
     - [x] 💙 Save progress and start from the last level or the win screen
-    - [ ] 💙 Pause menu
+    - [x] 💙 Pause menu
     - [ ] 💙 Sound settings
         - [ ] 💙💛 Main menu music
         - [ ] 💙💛 Level music

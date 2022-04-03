@@ -11,37 +11,45 @@ script = ExtResource( 1 )
 margin_right = 512.0
 margin_bottom = 300.0
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Container"]
-margin_left = 221.0
-margin_top = 107.0
-margin_right = 290.0
-margin_bottom = 193.0
+margin_left = 177.0
+margin_top = 98.0
+margin_right = 334.0
+margin_bottom = 202.0
 
 [node name="Title" type="Label" parent="Container/VBoxContainer"]
-margin_right = 69.0
+margin_right = 157.0
 margin_bottom = 14.0
 text = "[Burakku]"
 align = 1
 
-[node name="Spacer" type="Control" parent="Container/VBoxContainer"]
+[node name="WinLabel" type="Label" parent="Container/VBoxContainer"]
 margin_top = 18.0
-margin_right = 69.0
-margin_bottom = 38.0
+margin_right = 157.0
+margin_bottom = 32.0
+text = "Nice! You beat all levels!"
+align = 1
+
+[node name="Spacer" type="Control" parent="Container/VBoxContainer"]
+margin_top = 36.0
+margin_right = 157.0
+margin_bottom = 56.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="PlayButton" type="Button" parent="Container/VBoxContainer"]
-margin_top = 42.0
-margin_right = 69.0
-margin_bottom = 62.0
+margin_top = 60.0
+margin_right = 157.0
+margin_bottom = 80.0
 text = "Play"
 
 [node name="ContinueButton" type="Button" parent="Container/VBoxContainer"]
-margin_top = 66.0
-margin_right = 69.0
-margin_bottom = 86.0
+margin_top = 84.0
+margin_right = 157.0
+margin_bottom = 104.0
 text = "Continue"
 
 [node name="Overlay" parent="." instance=ExtResource( 2 )]
@@ -54,6 +62,9 @@ texture = ExtResource( 3 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 0, 0, 512, 300 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [connection signal="pressed" from="Container/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="Container/VBoxContainer/ContinueButton" to="." method="_on_ContinueButton_pressed"]

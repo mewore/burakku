@@ -24,6 +24,9 @@ public class Global : Node
     private static int bestLevel = FIRST_LEVEL;
     public static int BestLevel { get => bestLevel; }
 
+    private static bool hasBeatenAllLevels = false;
+    public static bool HasBeatenAllLevels { get => hasBeatenAllLevels; }
+
     public override void _Ready()
     {
         // if (save_file_exists(SETTINGS_SAVE_FILE))
@@ -44,7 +47,7 @@ public class Global : Node
         currentLevelPath = GetLevelScenePath(currentLevel);
     }
 
-    public static void WinLevel(int level)
+    public static bool WinLevel(int level)
     {
         currentLevel = level;
         int lastLevel = currentLevel;
@@ -55,11 +58,11 @@ public class Global : Node
             currentLevelPath = nextLevelPath;
             bestLevel = Mathf.Max(bestLevel, currentLevel);
             SaveData(bestLevel);
+            return true;
         }
-        else
-        {
-            SetLevelToFirst();
-        }
+        hasBeatenAllLevels = true;
+        SetLevelToFirst();
+        return false;
     }
 
     private static string GetLevelScenePath(int level)

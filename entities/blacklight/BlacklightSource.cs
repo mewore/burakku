@@ -131,7 +131,6 @@ public class BlacklightSource : Node2D
     {
         if (!animationPlayer.IsPlaying() && turnedOn != shouldBeTurnedOn)
         {
-            GD.Print(">> Playing");
             animationPlayer.Play(shouldBeTurnedOn ? "start" : "cease");
         }
     }
