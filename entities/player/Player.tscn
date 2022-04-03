@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://entities/player/Player.cs" type="Script" id=1]
 [ext_resource path="res://entities/player/states/PlayerActive.cs" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://entities/player/animations/walk.tres" type="Animation" id=6]
 [ext_resource path="res://entities/player/animations/jump_side.tres" type="Animation" id=7]
 [ext_resource path="res://entities/player/animations/fall_side.tres" type="Animation" id=8]
+[ext_resource path="res://audio/jump.ogg" type="AudioStream" id=9]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -275,6 +276,10 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Tip"]
 anims/fade_out = SubResource( 8 )
+
+[node name="JumpPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+bus = "SFX"
 
 [connection signal="area_entered" from="DoorDetector" to="." method="_on_DoorDetector_area_entered"]
 [connection signal="area_exited" from="DoorDetector" to="." method="_on_DoorDetector_area_exited"]

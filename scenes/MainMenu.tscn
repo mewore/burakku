@@ -79,6 +79,17 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Label" type="Label" parent="."]
+margin_left = 392.0
+margin_top = 280.0
+margin_right = 506.0
+margin_bottom = 296.0
+text = "SFX from ZapSplat"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="Container/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="Container/VBoxContainer/ContinueButton" to="." method="_on_ContinueButton_pressed"]
 [connection signal="FadeOutDone" from="Overlay" to="." method="_on_Overlay_FadeOutDone"]

@@ -44,7 +44,8 @@ Blacklight" is already taken.~~
     - [x] 💙 Sound settings
         - [x] 💙💛 Main menu music
         - [x] 💙💛 Level music
-        - [ ] 💙💛 Jump sound
+        - [x] 💙💛 Jump sound
+        - [ ] 💙💛 Land sound
         - [ ] 💙💛 Clear level sound
         - [ ] 💙💛 Vampire death sound
         - [ ] 💙💛 Button click sound

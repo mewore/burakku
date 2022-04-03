@@ -35,6 +35,8 @@ public class Player : KinematicBody2D
     private Vector2 enterDoorSourcePosition = Vector2.Zero;
     private Vector2 enterDoorTargetPosition = Vector2.Zero;
 
+    private AudioStreamPlayer jumpPlayer;
+
     [Export]
     private float closenessToDoor { get => 0f; set => Position = enterDoorSourcePosition.LinearInterpolate(enterDoorTargetPosition, value); }
 
@@ -70,6 +72,7 @@ public class Player : KinematicBody2D
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         tipAnimationPlayer = GetNode<AnimationPlayer>("Tip/AnimationPlayer");
         doorDetectionShape = GetNode<CollisionShape2D>("DoorDetector/CollisionShape2D");
+        jumpPlayer = GetNode<AudioStreamPlayer>("JumpPlayer");
     }
 
     public override void _PhysicsProcess(float delta)
@@ -118,6 +121,8 @@ public class Player : KinematicBody2D
                 lastOnFloorAt = lastWantedToJumpAt = now - JUMP_GRACE_PERIOD;
                 motion.y = -jumpSpeed;
                 isJumping = true;
+                jumpPlayer.PitchScale = 1f + (GD.Randf() - .5f) * .5f;
+                jumpPlayer.Play();
             }
             else if (isJumping && Input.IsActionJustReleased(JumpInput))
             {
