@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://entities/player/vamp/fire-particle.png" type="Texture" id=1]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -10,18 +12,22 @@ _data = [ Vector2( 0, 0.506015 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 
 colors = PoolColorArray( 0.842773, 0.463984, 0.121807, 1, 1, 0.169922, 0, 0 )
 
 [node name="HitFire" type="CPUParticles2D"]
+self_modulate = Color( 1, 1, 1, 0.172549 )
 material = SubResource( 1 )
 position = Vector2( 0, -16 )
 amount = 50
 lifetime = 0.5
 local_coords = false
+texture = ExtResource( 1 )
 emission_shape = 1
 emission_sphere_radius = 5.0
 spread = 60.0
 gravity = Vector2( 0, -100 )
 initial_velocity = 40.0
 damping = 50.0
-scale_amount = 10.0
+angle = 180.0
+angle_random = 1.0
+scale_amount = 3.0
 scale_amount_random = 1.0
 scale_amount_curve = SubResource( 2 )
 color_ramp = SubResource( 3 )

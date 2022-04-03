@@ -11,6 +11,9 @@ public class VampDying : VampState
     private AnimationPlayer animationPlayer;
     private bool finished = false;
 
+    [Export]
+    private bool activelyBurning = true;
+
     public override void _Ready()
     {
         base._Ready();
@@ -34,7 +37,7 @@ public class VampDying : VampState
     public override void Process(float delta)
     {
         vamp.ClearFire();
-        vamp.DamageLight.Energy = Mathf.Max(vamp.DamageLight.Energy - ENERGY_DECREASE_PER_SECOND * delta, 0f);
+        vamp.RenderFire(delta, activelyBurning);
     }
 
     public void Finish()

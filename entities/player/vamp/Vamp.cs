@@ -6,7 +6,7 @@ public class Vamp : Player
     [Signal]
     delegate void Died();
 
-    private const float HIT_FIRE_DISTANCE = 12f;
+    private const float HIT_FIRE_DISTANCE = 8f;
     private const float HP_LOST_PER_HIT_PER_SECOND = .1f;
     private const int DAMAGE_RAYCAST_RESOLUTION_MIN = 5;
     private const int DAMAGE_RAYCAST_RESOLUTION_MAX = 30;
@@ -14,11 +14,14 @@ public class Vamp : Player
 
     private const float DAMAGE_LIGHT_ENERGY_PER_HIT = .3f;
     private const float DAMAGE_LIGHT_ENERGY_CHANGE = 1f;
+    private const float DAMAGE_PSEUDO_LIGHT_OPACITY_PER_HIT = .1f;
+    private const float DAMAGE_PSEUDO_LIGHT_OPACITY_CHANGE = 1f;
+    private const float DAMAGE_PSEUDO_LIGHT_OPACITY_WHEN_BURNING = 1f;
 
     private float hp = 1f;
 
-    private List<float> pendingHitAngles = new List<float>();
-    private List<float> lastHitAngles = new List<float>();
+    private List<(float, float)> pendingHits = new List<(float, float)>();
+    private List<(float, float)> firesToRender = new List<(float, float)>();
 
     [Export]
     private PackedScene hitFireScene = null;
@@ -34,6 +37,7 @@ public class Vamp : Player
 
     private LineBar hpBar;
 
+    private CanvasItem damagePseudoLight;
     private Light2D damageLight;
     public Light2D DamageLight { get => damageLight; }
 
@@ -53,6 +57,8 @@ public class Vamp : Player
         damageRay = GetNode<RayCast2D>("DamageRay");
         hpBar = GetNode<LineBar>("HpBar");
         damageLight = GetNode<Light2D>("DamageLight");
+        GetNode<Light2D>("DeathLight").Visible = true;
+        damagePseudoLight = GetNode<CanvasItem>("Center/DamagePseudoLight");
     }
 
     public float CheckForDamage(float delta)
@@ -77,6 +83,7 @@ public class Vamp : Player
             int steps = Mathf.Clamp((int)((maxAngle - minAngle) / DAMAGE_RAYCAST_ANGLE_STEP), DAMAGE_RAYCAST_RESOLUTION_MIN, DAMAGE_RAYCAST_RESOLUTION_MAX);
 
             Vector2 centerCastTo = blacklightSource.ToLocal(ToGlobal(center)).Normalized() * blacklightSource.RayLength;
+            float castToLength = centerCastTo.Length();
             damageRay.Position = ToLocal(blacklightSource.GlobalPosition);
             float anglePerStep = (maxAngle - minAngle) / Mathf.Max(1, steps - 1);
             float offsetAngle = minAngle;
@@ -86,32 +93,32 @@ public class Vamp : Player
                 damageRay.ForceRaycastUpdate();
                 if (damageRay.IsColliding() && damageRay.GetCollider() == this)
                 {
-                    registerHit(damageRay.GetCollisionPoint());
+                    registerHit(damageRay.GetCollisionPoint(), Mathf.Abs(damageRay.GetCollisionNormal().Dot(damageRay.CastTo) / castToLength));
                 }
             }
         }
 
-        hp -= pendingHitAngles.Count * HP_LOST_PER_HIT_PER_SECOND * delta;
+        foreach ((float, float) hit in pendingHits)
+        {
+            hp -= hit.Item2 * HP_LOST_PER_HIT_PER_SECOND * delta;
+        }
         hpBar.Value = hp;
         hpBar.Visible = hp > 0f && hp < 1f;
 
-        lastHitAngles = pendingHitAngles;
-        pendingHitAngles = new List<float>();
+        firesToRender = pendingHits;
+        pendingHits = new List<(float, float)>();
 
         return hp;
     }
 
     public void ClearFire()
     {
-        for (int hitIndex = 0; hitIndex < hitFires.Count; hitIndex++)
-        {
-            hitFires[hitIndex].Emitting = false;
-        }
+        firesToRender = new List<(float, float)>();
     }
 
-    public void RenderFire()
+    public void RenderFire(float delta, bool isBurning)
     {
-        for (int hitIndex = 0; hitIndex < lastHitAngles.Count; hitIndex++)
+        for (int hitIndex = 0; hitIndex < firesToRender.Count; hitIndex++)
         {
             if (hitIndex >= hitFires.Count)
             {
@@ -119,19 +126,35 @@ public class Vamp : Player
                 hitFires.Add(hitFire);
                 AddChild(hitFire);
             }
-            hitFires[hitIndex].Position = center + Vector2.Right.Rotated(lastHitAngles[hitIndex]) * HIT_FIRE_DISTANCE;
-            hitFires[hitIndex].Rotation = lastHitAngles[hitIndex];
+            hitFires[hitIndex].Modulate = new Color(hitFires[hitIndex].Modulate, firesToRender[hitIndex].Item2);
+            hitFires[hitIndex].Position = center + Vector2.Right.Rotated(firesToRender[hitIndex].Item1) * HIT_FIRE_DISTANCE;
+            hitFires[hitIndex].Rotation = firesToRender[hitIndex].Item1;
             hitFires[hitIndex].Emitting = true;
         }
-        for (int hitIndex = lastHitAngles.Count; hitIndex < hitFires.Count; hitIndex++)
+        float maxOpacityChange = DAMAGE_PSEUDO_LIGHT_OPACITY_CHANGE * delta;
+        for (int hitIndex = firesToRender.Count; hitIndex < hitFires.Count; hitIndex++)
         {
             hitFires[hitIndex].Emitting = false;
+            if (hitFires[hitIndex].Modulate.a > 0f)
+            {
+                hitFires[hitIndex].Modulate = new Color(hitFires[hitIndex].Modulate, Mathf.Max(0f, hitFires[hitIndex].Modulate.a - maxOpacityChange));
+            }
         }
+        float targetOpacity = isBurning ? DAMAGE_PSEUDO_LIGHT_OPACITY_WHEN_BURNING : DAMAGE_PSEUDO_LIGHT_OPACITY_PER_HIT * firesToRender.Count;
+        float pseudoLightOpacity = damagePseudoLight.Modulate.a;
+        float opacityDifference = Mathf.Abs(pseudoLightOpacity - targetOpacity);
+        if (opacityDifference > .01f)
+        {
+            damagePseudoLight.Modulate = opacityDifference <= maxOpacityChange
+                ? new Color(damagePseudoLight.Modulate, targetOpacity)
+                : new Color(damagePseudoLight.Modulate, pseudoLightOpacity + Mathf.Sign(targetOpacity - pseudoLightOpacity) * maxOpacityChange);
+        }
+        damagePseudoLight.Visible = damagePseudoLight.Modulate.a > .01f;
     }
 
-    public void registerHit(Vector2 hitPosition)
+    public void registerHit(Vector2 hitPosition, float parallel)
     {
-        pendingHitAngles.Add(ToGlobal(center).AngleToPoint(hitPosition) + Mathf.Pi);
+        pendingHits.Add((ToGlobal(center).AngleToPoint(hitPosition) + Mathf.Pi, parallel));
     }
 
     public void _on_Dying_Finished()

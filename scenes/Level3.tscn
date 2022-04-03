@@ -63,6 +63,15 @@ shape = SubResource( 1 )
 position = Vector2( 216, 216 )
 shape = SubResource( 2 )
 
+[node name="Polygon2D2" type="Polygon2D" parent="World/CollisionShape2D2" index="0"]
+position = Vector2( -216, -216 )
+texture = ExtResource( 3 )
+polygon = PoolVector2Array( 192, 208, 240, 208, 240, 224, 192, 224 )
+
+[node name="AutoLightOccluder" parent="World/CollisionShape2D2/Polygon2D2" index="0" instance=ExtResource( 6 )]
+
+[node name="PolygonLine" parent="World/CollisionShape2D2/Polygon2D2" index="1" instance=ExtResource( 5 )]
+
 [node name="CollisionShape2D9" type="CollisionShape2D" parent="World" index="4"]
 position = Vector2( 256, -8 )
 shape = SubResource( 3 )
@@ -98,16 +107,18 @@ position = Vector2( 348, 76 )
 shape = SubResource( 10 )
 
 [node name="Polygon2D4" type="Polygon2D" parent="World/CollisionShape2D5" index="0"]
-position = Vector2( -440, -192 )
-color = Color( 0.552941, 0.545098, 0.572549, 1 )
-polygon = PoolVector2Array( 432, 184, 440, 180, 448, 184, 452, 192, 448, 200, 440, 204, 432, 200, 428, 192 )
+texture = ExtResource( 3 )
+polygon = PoolVector2Array( -8, -8, 0, -12, 8, -8, 12, 0, 8, 8, 0, 12, -8, 8, -12, 0 )
+
+[node name="AutoLightOccluder2" parent="World/CollisionShape2D5/Polygon2D4" index="0" instance=ExtResource( 6 )]
+
+[node name="PolygonLine2" parent="World/CollisionShape2D5/Polygon2D4" index="1" instance=ExtResource( 5 )]
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="World" index="12"]
 position = Vector2( 392, 160 )
 shape = SubResource( 11 )
 
 [node name="Polygon2D" type="Polygon2D" parent="World" index="13"]
-color = Color( 0.552941, 0.545098, 0.572549, 1 )
 texture = ExtResource( 3 )
 polygon = PoolVector2Array( 176, 272, 216, 280, 376, 280, 376, 248, 392, 248, 392, 280, 480, 280, 480, 168, 416, 168, 404, 168, 400, 176, 392, 180, 384, 176, 380, 172, 336, 180, 336, 216, 288, 216, 288, 188, 264, 204, 256, 188, 288, 168, 288, 152, 336, 152, 336, 176, 380, 168, 380, 148, 388, 140, 396, 140, 400, 144, 400, 152, 480, 152, 480, -32, 528, -32, 528, 312, -16, 312, -16, -32, 32, -32, 32, 192, 96, 192, 108, 216, 160, 216, 160, 232, 120, 232, 144, 256 )
 
@@ -115,23 +126,14 @@ polygon = PoolVector2Array( 176, 272, 216, 280, 376, 280, 376, 248, 392, 248, 39
 
 [node name="PolygonLine" parent="World/Polygon2D" index="1" instance=ExtResource( 5 )]
 
-[node name="Polygon2D2" type="Polygon2D" parent="World" index="14"]
-color = Color( 0.552941, 0.545098, 0.572549, 1 )
-texture = ExtResource( 3 )
-polygon = PoolVector2Array( 192, 208, 240, 208, 240, 224, 192, 224 )
-
-[node name="AutoLightOccluder" parent="World/Polygon2D2" index="0" instance=ExtResource( 6 )]
-
-[node name="PolygonLine" parent="World/Polygon2D2" index="1" instance=ExtResource( 5 )]
-
-[node name="Polygon2D3" type="Polygon2D" parent="World" index="15"]
-color = Color( 0.552941, 0.545098, 0.572549, 1 )
+[node name="Polygon2D3" type="Polygon2D" parent="World" index="14"]
 texture = ExtResource( 3 )
 polygon = PoolVector2Array( 288, 96, 336, 96, 336, 80, 288, 80 )
 
 [node name="AutoLightOccluder" parent="World/Polygon2D3" index="0" instance=ExtResource( 6 )]
 
 [node name="PolygonLine" parent="World/Polygon2D3" index="1" instance=ExtResource( 5 )]
+points = PoolVector2Array( 344, 80 )
 
 [node name="StaticBlacklight" parent="Blacklights" index="0" instance=ExtResource( 1 )]
 position = Vector2( 448, 152 )

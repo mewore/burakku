@@ -37,6 +37,7 @@ Blacklight" is already taken.~~
 - [x] 💜 Simple blacklight character sprite
 - [x] 💜 Simple environment textures
 - [x] 💟 Publish `0.1.1`
+- [x] 💙💜 Better-looking fire and lighting
 - [ ] 💙 Main menu (just "Play")
     - [ ] 💙 Save progress and start from the last level or the win screen
     - [ ] 💙 Pause menu
@@ -49,7 +50,10 @@ Blacklight" is already taken.~~
         - [ ] 💙💛 Button click sound
         - [ ] 💙💛 Button un-click sound
         - [ ] 💙💛 Vampire damage sound
+        - [ ] 💙💛 Menu item hover sound
+        - [ ] 💙💛 Menu item press sound
 - [ ] 💟 Publish `0.1.2`
+- [ ] 💙 Settings for the graphics quality
 - [ ] 💙💜 Enemies that move around like goombas and are killed almost instantly by the blacklight
 - [ ] 💙 The enemies kill the vampire immediately upon contact
 - [ ] 💙 Particle effects for damaging the enemies
@@ -64,6 +68,7 @@ Blacklight" is already taken.~~
 
 ### Advanced features
 
+- [ ] 💙💜 Gradient in the blacklight polygons (the challenge is going to be to reposition the polygon texture properly)
 - [ ] 💜 Main menu art
 - [ ] 💙 Be able to start from a specific level
 - [ ] 💜 Prettier blacklight sprite and animation

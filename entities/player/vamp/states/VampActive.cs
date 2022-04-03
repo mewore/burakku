@@ -14,7 +14,7 @@ public class VampActive : VampState
 
     public override void Process(float delta)
     {
-        vamp.RenderFire();
+        vamp.RenderFire(delta, false);
     }
 
     public override void UnhandledInput(InputEvent @event)
