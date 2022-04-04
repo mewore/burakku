@@ -14,7 +14,7 @@ public class Player : KinematicBody2D
 
     private float jumpSpeed;
     private const float JUMP_SPEED_RETENTION = .5f;
-    private const float JUMP_GRACE_PERIOD = .1f;
+    private const float JUMP_GRACE_PERIOD = .2f;
     private float lastWantedToJumpAt = -JUMP_GRACE_PERIOD * 2f;
     private float lastOnFloorAt = 0f;
     private bool isJumping = false;

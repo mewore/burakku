@@ -1,154 +1,149 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://entities/blacklight/StaticBlacklight.tscn" type="PackedScene" id=1]
-[ext_resource path="res://entities/win-door/WinDoor.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://environment/background-window.png" type="Texture" id=2]
 [ext_resource path="res://environment/wall.png" type="Texture" id=3]
-[ext_resource path="res://scenes/Level.tscn" type="PackedScene" id=4]
-[ext_resource path="res://environment/PolygonLine.tscn" type="PackedScene" id=5]
-[ext_resource path="res://environment/AutoLightOccluder.tscn" type="PackedScene" id=6]
-[ext_resource path="res://entities/door/Door.tscn" type="PackedScene" id=7]
-[ext_resource path="res://entities/button/Button.tscn" type="PackedScene" id=8]
+[ext_resource path="res://environment/PolygonLine.tscn" type="PackedScene" id=4]
+[ext_resource path="res://entities/button/Button.tscn" type="PackedScene" id=5]
+[ext_resource path="res://entities/button/MoveTarget.tscn" type="PackedScene" id=6]
+[ext_resource path="res://environment/AutoLightOccluder.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 24, 32 )
+extents = Vector2( 296, 16 )
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 24, 8 )
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 256, 8 )
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 24, 8 )
+[sub_resource type="SegmentShape2D" id=2]
+b = Vector2( 92, 0 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 40, 8 )
+extents = Vector2( 32, 8 )
 
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 8, 16 )
+[sub_resource type="SegmentShape2D" id=4]
+a = Vector2( 0, 8 )
+b = Vector2( 12, 0 )
 
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 24, 8 )
+[node name="Level2" instance=ExtResource( 1 )]
 
-[sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 24, 8 )
+[node name="WinDoor" parent="Game" index="1"]
+position = Vector2( 472, 280 )
 
-[sub_resource type="SegmentShape2D" id=9]
-a = Vector2( -16, 0 )
-b = Vector2( 32, -8 )
-
-[sub_resource type="CircleShape2D" id=10]
-
-[sub_resource type="CapsuleShape2D" id=11]
-
-[node name="Level3" instance=ExtResource( 4 )]
-
-[node name="Door" parent="Game/Doors" index="0" instance=ExtResource( 7 )]
-position = Vector2( 312, 216 )
-
-[node name="WinDoor2" parent="Game" index="1" instance=ExtResource( 2 )]
-position = Vector2( 328, 80 )
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Game/World" index="0"]
-polygon = PoolVector2Array( 32, 280, 480, 280, 480, 0, 512, 0, 512, 312, 0, 312, 0, 0, 32, 0 )
-
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Game/World" index="1"]
-polygon = PoolVector2Array( 216, 280, 176, 272, 144, 256, 112, 224, 96, 192, 32, 192, 32, 280 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/World" index="2"]
-position = Vector2( 312, 184 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/World" index="0"]
+position = Vector2( 272, 296 )
 shape = SubResource( 1 )
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Game/World" index="3"]
-position = Vector2( 216, 216 )
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Game/World" index="1"]
+position = Vector2( 272, -16 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Game/World" index="2"]
+position = Vector2( 0, 168 )
+rotation = 1.57079
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Game/World" index="3"]
+position = Vector2( 512, 168 )
+rotation = 1.57079
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="Game/World" index="4"]
+position = Vector2( 16, 192 )
 shape = SubResource( 2 )
-
-[node name="Polygon2D2" type="Polygon2D" parent="Game/World/CollisionShape2D2" index="0"]
-position = Vector2( -216, -216 )
-texture = ExtResource( 3 )
-polygon = PoolVector2Array( 192, 208, 240, 208, 240, 224, 192, 224 )
-
-[node name="AutoLightOccluder" parent="Game/World/CollisionShape2D2/Polygon2D2" index="0" instance=ExtResource( 6 )]
-
-[node name="PolygonLine" parent="Game/World/CollisionShape2D2/Polygon2D2" index="1" instance=ExtResource( 5 )]
-
-[node name="CollisionShape2D9" type="CollisionShape2D" parent="Game/World" index="4"]
-position = Vector2( 256, -8 )
-shape = SubResource( 3 )
-
-[node name="CollisionShape2D7" type="CollisionShape2D" parent="Game/World" index="5"]
-position = Vector2( 280, 184 )
-rotation = -0.523598
-shape = SubResource( 4 )
-
-[node name="CollisionShape2D10" type="CollisionShape2D" parent="Game/World" index="6"]
-position = Vector2( 440, 160 )
-shape = SubResource( 5 )
-
-[node name="CollisionShape2D11" type="CollisionShape2D" parent="Game/World" index="7"]
-position = Vector2( 384, 264 )
-shape = SubResource( 6 )
-
-[node name="CollisionShape2D8" type="CollisionShape2D" parent="Game/World" index="8"]
-position = Vector2( 136, 224 )
-shape = SubResource( 7 )
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Game/World" index="9"]
-position = Vector2( 312, 88 )
-shape = SubResource( 8 )
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="Game/World" index="10"]
-position = Vector2( 352, 176 )
-shape = SubResource( 9 )
 one_way_collision = true
 
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="Game/World" index="11"]
-position = Vector2( 348, 76 )
-shape = SubResource( 10 )
-
-[node name="Polygon2D4" type="Polygon2D" parent="Game/World/CollisionShape2D5" index="0"]
+[node name="Polygon2D3" type="Polygon2D" parent="Game/World/CollisionShape2D6" index="0"]
+position = Vector2( -108, -84 )
 texture = ExtResource( 3 )
-polygon = PoolVector2Array( -8, -8, 0, -12, 8, -8, 12, 0, 8, 8, 0, 12, -8, 8, -12, 0 )
+polygon = PoolVector2Array( 108, 84, 200, 84, 200, 88, 108, 88 )
 
-[node name="AutoLightOccluder2" parent="Game/World/CollisionShape2D5/Polygon2D4" index="0" instance=ExtResource( 6 )]
+[node name="PolygonLine" parent="Game/World/CollisionShape2D6/Polygon2D3" index="0" instance=ExtResource( 4 )]
 
-[node name="PolygonLine2" parent="Game/World/CollisionShape2D5/Polygon2D4" index="1" instance=ExtResource( 5 )]
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="Game/World" index="5"]
+position = Vector2( 300, 80 )
+shape = SubResource( 2 )
+one_way_collision = true
 
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="Game/World" index="12"]
-position = Vector2( 392, 160 )
-shape = SubResource( 11 )
-
-[node name="Polygon2D" type="Polygon2D" parent="Game/World" index="13"]
+[node name="Polygon2D3" type="Polygon2D" parent="Game/World/CollisionShape2D7" index="0"]
+position = Vector2( -108, -84 )
 texture = ExtResource( 3 )
-polygon = PoolVector2Array( 176, 272, 216, 280, 376, 280, 376, 248, 392, 248, 392, 280, 480, 280, 480, 168, 416, 168, 404, 168, 400, 176, 392, 180, 384, 176, 380, 172, 336, 180, 336, 216, 288, 216, 288, 188, 264, 204, 256, 188, 288, 168, 288, 152, 336, 152, 336, 176, 380, 168, 380, 148, 388, 140, 396, 140, 400, 144, 400, 152, 480, 152, 480, -32, 528, -32, 528, 312, -16, 312, -16, -32, 32, -32, 32, 192, 96, 192, 108, 216, 160, 216, 160, 232, 120, 232, 144, 256 )
+polygon = PoolVector2Array( 108, 84, 200, 84, 200, 88, 108, 88 )
 
-[node name="AutoLightOccluder" parent="Game/World/Polygon2D" index="0" instance=ExtResource( 6 )]
+[node name="PolygonLine" parent="Game/World/CollisionShape2D7/Polygon2D3" index="0" instance=ExtResource( 4 )]
 
-[node name="PolygonLine" parent="Game/World/Polygon2D" index="1" instance=ExtResource( 5 )]
-
-[node name="Polygon2D3" type="Polygon2D" parent="Game/World" index="14"]
+[node name="Polygon2D" type="Polygon2D" parent="Game/World" index="6"]
 texture = ExtResource( 3 )
-polygon = PoolVector2Array( 288, 96, 336, 96, 336, 80, 288, 80 )
+polygon = PoolVector2Array( 16, 280, 496, 280, 496, -32, 528, -32, 528, 312, -16, 312, -16, -32, 16, -32 )
 
-[node name="AutoLightOccluder" parent="Game/World/Polygon2D3" index="0" instance=ExtResource( 6 )]
+[node name="PolygonLine" parent="Game/World/Polygon2D" index="0" instance=ExtResource( 4 )]
 
-[node name="PolygonLine" parent="Game/World/Polygon2D3" index="1" instance=ExtResource( 5 )]
-points = PoolVector2Array( 344, 80 )
+[node name="AutoLightOccluder" parent="Game/World/Polygon2D" index="1" instance=ExtResource( 7 )]
 
-[node name="StaticBlacklight" parent="Game/Blacklights" index="0" instance=ExtResource( 1 )]
-position = Vector2( 448, 152 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Game/World" index="7"]
+polygon = PoolVector2Array( 140, 280, 192, 280, 308, 80, 256, 80 )
 
-[node name="NastyBlacklight" parent="Game/Blacklights" index="1" instance=ExtResource( 1 )]
-position = Vector2( 224, 208 )
+[node name="Polygon2D" type="Polygon2D" parent="Game/World/CollisionPolygon2D" index="0"]
+texture = ExtResource( 3 )
+polygon = PoolVector2Array( 140, 280, 192, 280, 308, 80, 256, 80 )
 
-[node name="Button" parent="Game/Buttons" index="0" instance=ExtResource( 8 )]
-position = Vector2( 204, 208 )
-target = NodePath("../../Doors/Door")
+[node name="PolygonLine" parent="Game/World/CollisionPolygon2D/Polygon2D" index="0" instance=ExtResource( 4 )]
 
-[node name="Button3" parent="Game/Buttons" index="1" instance=ExtResource( 8 )]
-position = Vector2( 408, 280 )
-target = NodePath("../../Doors/Door")
+[node name="AutoLightOccluder" parent="Game/World/CollisionPolygon2D/Polygon2D" index="1" instance=ExtResource( 7 )]
 
-[node name="Button4" parent="Game/Buttons" index="2" instance=ExtResource( 8 )]
-position = Vector2( 224, 280 )
-target = NodePath("../../Blacklights/NastyBlacklight")
+[node name="Platforms" type="StaticBody2D" parent="Game" index="3"]
+collision_mask = 4
+
+[node name="Blacklight" parent="Game" index="5"]
+position = Vector2( 36, 192 )
+
+[node name="Vamp" parent="Game" index="6"]
+position = Vector2( 52, 280 )
+
+[node name="Button" parent="Game/Buttons" index="0" instance=ExtResource( 5 )]
+position = Vector2( 64, 192 )
+target = NodePath("../../Elevator/MoveTarget")
+
+[node name="Button2" parent="Game/Buttons" index="1" instance=ExtResource( 5 )]
+position = Vector2( 244, 280 )
+target = NodePath("../../Elevator/MoveTarget")
+
+[node name="Elevator" type="StaticBody2D" parent="Game" index="9" groups=[
+"opaque",
+]]
+position = Vector2( 144, 272 )
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Elevator" index="0"]
+position = Vector2( -24, 8 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Game/Elevator" index="1"]
+position = Vector2( -68, 0 )
+shape = SubResource( 4 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Game/Elevator" index="2"]
+position = Vector2( -68, 0 )
+texture = ExtResource( 3 )
+polygon = PoolVector2Array( 0, 0, 68, 0, 68, 16, 0, 16 )
+
+[node name="PolygonLine" parent="Game/Elevator/Polygon2D" index="0" instance=ExtResource( 4 )]
+
+[node name="AutoLightOccluder" parent="Game/Elevator/Polygon2D" index="1" instance=ExtResource( 7 )]
+position = Vector2( 68, 0 )
+
+[node name="MoveTarget" parent="Game/Elevator" index="3" instance=ExtResource( 6 )]
+position = Vector2( 112, -192 )
+travelTime = 3.0
+
+[node name="BackgroundWindow" type="Sprite" parent="Background" index="1"]
+position = Vector2( 72, 44 )
+texture = ExtResource( 2 )
+
+[node name="BackgroundWindow2" type="Sprite" parent="Background" index="2"]
+position = Vector2( 200, 44 )
+texture = ExtResource( 2 )
+
+[node name="BackgroundWindow3" type="Sprite" parent="Background" index="3"]
+position = Vector2( 320, 44 )
+texture = ExtResource( 2 )
+
+[node name="BackgroundWindow4" type="Sprite" parent="Background" index="4"]
+position = Vector2( 448, 44 )
+texture = ExtResource( 2 )

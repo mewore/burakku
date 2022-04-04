@@ -21,12 +21,7 @@ public class MoveTarget : Position2D, Operable
 
     public override void _Ready()
     {
-        if (body == null)
-        {
-            GD.PushWarning("MoveTarget node with no set body: " + GetPath());
-            return;
-        }
-        bodyNode = GetNode<StaticBody2D>(body);
+        bodyNode = body == null ? GetParent<StaticBody2D>() : GetNode<StaticBody2D>(body);
         sourcePosition = bodyNode.GlobalPosition;
         targetPosition = GlobalPosition;
     }
@@ -44,7 +39,7 @@ public class MoveTarget : Position2D, Operable
             var actualCloseness = movementCurve.InterpolateBaked(closenessToTarget);
             Vector2 newBodyPosition = sourcePosition * (1f - actualCloseness) + targetPosition * actualCloseness;
             Vector2 relativeToBody = bodyNode.ToLocal(newBodyPosition);
-            bodyNode.ConstantLinearVelocity = relativeToBody * 1.5f / delta;
+            bodyNode.ConstantLinearVelocity = relativeToBody / delta;
             bodyNode.Position += relativeToBody;
         }
     }

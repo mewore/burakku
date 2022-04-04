@@ -54,8 +54,9 @@ Blacklight" is already taken.~~
 - [x] 💙 Button that activates a platform
 - [x] 💙💛 Button click sound
 - [x] 💙💛 Button un-click sound
-- [ ] 💚 Some proper levels
+- [x] 💚 Some proper levels
 - [ ] 💟 Publish `0.1.3`
+- [ ] 💜 A proper font
 - [ ] 💜 Environment art
 - [ ] 💜 Banner art
 - [ ] 💜 Icon

@@ -7,7 +7,7 @@ public class Vamp : Player
     delegate void Died();
 
     private const float HIT_FIRE_DISTANCE = 8f;
-    private const float HP_LOST_PER_HIT_PER_SECOND = .1f;
+    private const float HP_LOST_PER_HIT_PER_SECOND = .15f;
     private const int DAMAGE_RAYCAST_RESOLUTION_MIN = 5;
     private const int DAMAGE_RAYCAST_RESOLUTION_MAX = 30;
     private const float DAMAGE_RAYCAST_ANGLE_STEP = Mathf.Pi / DAMAGE_RAYCAST_RESOLUTION_MAX;
