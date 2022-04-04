@@ -66,6 +66,7 @@ public class Level : Node2D
 
     private void WinLevel()
     {
+        GlobalSound.GetInstance(this).PlayClearLevel();
         targetScene = Global.WinLevel(currentLevel) ? Global.CurrentLevelPath : MAIN_MENU_PATH;
         overlay.FadeOut();
     }

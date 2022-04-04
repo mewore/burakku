@@ -44,9 +44,10 @@ Blacklight" is already taken.~~
     - [x] 💙 Sound settings
         - [x] 💙💛 Main menu music
         - [x] 💙💛 Level music
-        - [x] 💙💛 Jump sound
-        - [x] 💙💛 Land sound
-        - [ ] 💙💛 Clear level sound
+        - [x] 💙💛 Jump sound ([Source](https://www.zapsplat.com/music/bendy-stick-whoosh-through-air-fast-3/))
+        - [x] 💙💛 Land sound ([Source](https://www.zapsplat.com/music/footsteps-in-sandals-flip-flops-on-slightly-gritty-garage-floor-single-step-3/))
+        - [x] 💙💛 Clear level sound ([Source](https://www.zapsplat.com/music/game-sound-bright-and-warm-synth-complete-success-tone-1/))
+        - [ ] 💙💛 Lose level sound ([Source](https://www.zapsplat.com/music/game-sound-hit-thud-good-for-success-win-or-finish-level/))
         - [ ] 💙💛 Vampire death sound
         - [ ] 💙💛 Button click sound
         - [ ] 💙💛 Button un-click sound
