@@ -50,7 +50,7 @@ Blacklight" is already taken.~~
         - [x] 💙💛 Lose level sound ([Source](https://www.zapsplat.com/music/game-sound-hit-thud-good-for-success-win-or-finish-level/))
         - [x] 💙💛 Vampire death sound ([Source](https://www.zapsplat.com/music/medium-fireball-close/))
         - [x] 💙💛 Vampire damage sound ([Source](https://www.zapsplat.com/music/fire-small-flame-close/))
-- [ ] 💟 Publish `0.1.2`
+- [x] 💟 Publish `0.1.2`
 - [ ] 💙 Settings for the graphics quality
 - [ ] 💙💜 Enemies that move around like goombas and are killed almost instantly by the blacklight
 - [ ] 💙 The enemies kill the vampire immediately upon contact
