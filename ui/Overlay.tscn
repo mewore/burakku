@@ -72,6 +72,14 @@ visible = false
 color = Color( 0.0705882, 0.0627451, 0.101961, 1 )
 polygon = PoolVector2Array( 0, 0, 512, 0, 512, 312, 0, 312 )
 
+[node name="Control" type="Control" parent="Polygon2D"]
+margin_right = 512.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 512, 300 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/fade_in = SubResource( 1 )
 anims/fade_in_reverse = SubResource( 2 )
