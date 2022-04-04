@@ -48,10 +48,10 @@ Blacklight" is already taken.~~
         - [x] 💙💛 Land sound ([Source](https://www.zapsplat.com/music/footsteps-in-sandals-flip-flops-on-slightly-gritty-garage-floor-single-step-3/))
         - [x] 💙💛 Clear level sound ([Source](https://www.zapsplat.com/music/game-sound-bright-and-warm-synth-complete-success-tone-1/))
         - [x] 💙💛 Lose level sound ([Source](https://www.zapsplat.com/music/game-sound-hit-thud-good-for-success-win-or-finish-level/))
-        - [ ] 💙💛 Vampire death sound
+        - [x] 💙💛 Vampire death sound ([Source](https://www.zapsplat.com/music/medium-fireball-close/))
         - [ ] 💙💛 Button click sound
         - [ ] 💙💛 Button un-click sound
-        - [ ] 💙💛 Vampire damage sound
+        - [ ] 💙💛 Vampire damage sound ([Source](https://www.zapsplat.com/music/fire-small-flame-close/))
         - [ ] 💙💛 Menu item hover sound
         - [ ] 💙💛 Menu item press sound
 - [ ] 💟 Publish `0.1.2`
