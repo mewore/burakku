@@ -51,9 +51,6 @@ Blacklight" is already taken.~~
         - [x] 💙💛 Vampire death sound ([Source](https://www.zapsplat.com/music/medium-fireball-close/))
         - [x] 💙💛 Vampire damage sound ([Source](https://www.zapsplat.com/music/fire-small-flame-close/))
 - [x] 💟 Publish `0.1.2`
-- [ ] 💙💜 Enemies that move around like goombas and are killed almost instantly by the blacklight
-- [ ] 💙 The enemies kill the vampire immediately upon contact
-- [ ] 💙 Particle effects for damaging the enemies
 - [ ] 💙 Button that activates a platform
 - [ ] 💚 Some proper levels
 - [ ] 💟 Publish `0.1.3`
@@ -66,6 +63,9 @@ Blacklight" is already taken.~~
 
 ### Advanced features
 
+- [ ] 💙💜 Enemies that move around like goombas and are killed almost instantly by the blacklight
+- [ ] 💙 The enemies kill the vampire immediately upon contact
+- [ ] 💙 Particle effects for damaging the enemies
 - [ ] 💙 Settings for the graphics quality; enable lights
 - [ ] 💙💛 More dynamic-sounding level music
 - [ ] 💙💜 Gradient in the blacklight polygons (the challenge is going to be to reposition the polygon texture properly)
