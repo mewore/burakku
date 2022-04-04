@@ -61,6 +61,7 @@ public class Level : Node2D
 
     private void LoseLevel()
     {
+        GlobalSound.GetInstance(this).PlayLose();
         overlay.FadeOutReverse();
     }
 

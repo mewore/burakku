@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://audio/main-menu.ogg" type="AudioStream" id=1]
 [ext_resource path="res://audio/GlobalSound.cs" type="Script" id=2]
 [ext_resource path="res://audio/success.ogg" type="AudioStream" id=3]
+[ext_resource path="res://audio/failure.ogg" type="AudioStream" id=4]
 
 [node name="GlobalSound" type="Node"]
 pause_mode = 2
@@ -10,12 +11,16 @@ script = ExtResource( 2 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 1 )
-volume_db = 10.0
 autoplay = true
 bus = "Music"
 
 [node name="ClearLevel" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-volume_db = -2.244
+pitch_scale = 0.69
+bus = "SFX"
+
+[node name="Lose" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = 0.901
 pitch_scale = 0.69
 bus = "SFX"

@@ -280,12 +280,12 @@ anims/fade_out = SubResource( 8 )
 
 [node name="LandPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
-volume_db = -5.0
 pitch_scale = 1.89
 bus = "SFX"
 
 [node name="JumpPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
+volume_db = 1.0
 bus = "SFX"
 
 [connection signal="area_entered" from="DoorDetector" to="." method="_on_DoorDetector_area_entered"]
