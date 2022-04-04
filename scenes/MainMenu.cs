@@ -4,7 +4,6 @@ public class MainMenu : Node2D
 {
     private Button playButton;
     private Button continueButton;
-    private string targetScene;
     private Overlay overlay;
     private SoundControl soundControl;
 

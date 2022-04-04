@@ -51,7 +51,9 @@ Blacklight" is already taken.~~
         - [x] 💙💛 Vampire death sound ([Source](https://www.zapsplat.com/music/medium-fireball-close/))
         - [x] 💙💛 Vampire damage sound ([Source](https://www.zapsplat.com/music/fire-small-flame-close/))
 - [x] 💟 Publish `0.1.2`
-- [ ] 💙 Button that activates a platform
+- [x] 💙 Button that activates a platform
+- [ ] 💙💛 Button click sound
+- [ ] 💙💛 Button un-click sound
 - [ ] 💚 Some proper levels
 - [ ] 💟 Publish `0.1.3`
 - [ ] 💜 Environment art
@@ -80,8 +82,6 @@ Blacklight" is already taken.~~
 ### Expert features
 - [ ] 💙💛 Menu item hover sound
 - [ ] 💙💛 Menu item press sound
-- [ ] 💙💛 Button click sound
-- [ ] 💙💛 Button un-click sound
 - [ ] 💙💜💚 Boxes, which only the vampire can pick up and throw
 - [ ] 💙💜💚 Puzzles with water and floating boxes
 - [ ] 💚 Even more levels
