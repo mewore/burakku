@@ -52,8 +52,8 @@ Blacklight" is already taken.~~
         - [x] 💙💛 Vampire damage sound ([Source](https://www.zapsplat.com/music/fire-small-flame-close/))
 - [x] 💟 Publish `0.1.2`
 - [x] 💙 Button that activates a platform
-- [ ] 💙💛 Button click sound
-- [ ] 💙💛 Button un-click sound
+- [x] 💙💛 Button click sound
+- [x] 💙💛 Button un-click sound
 - [ ] 💚 Some proper levels
 - [ ] 💟 Publish `0.1.3`
 - [ ] 💜 Environment art

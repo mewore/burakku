@@ -101,18 +101,18 @@ position = Vector2( 248, 208 )
 [node name="Vamp" parent="Game" index="6"]
 position = Vector2( 52, 160 )
 
-[node name="BackgroundWindow" type="Sprite" parent="Background" index="2"]
+[node name="BackgroundWindow" type="Sprite" parent="Background" index="1"]
 position = Vector2( 72, 44 )
 texture = ExtResource( 2 )
 
-[node name="BackgroundWindow2" type="Sprite" parent="Background" index="3"]
+[node name="BackgroundWindow2" type="Sprite" parent="Background" index="2"]
 position = Vector2( 200, 44 )
 texture = ExtResource( 2 )
 
-[node name="BackgroundWindow3" type="Sprite" parent="Background" index="4"]
+[node name="BackgroundWindow3" type="Sprite" parent="Background" index="3"]
 position = Vector2( 320, 44 )
 texture = ExtResource( 2 )
 
-[node name="BackgroundWindow4" type="Sprite" parent="Background" index="5"]
+[node name="BackgroundWindow4" type="Sprite" parent="Background" index="4"]
 position = Vector2( 448, 44 )
 texture = ExtResource( 2 )

@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://entities/button/PuzzleButton.cs" type="Script" id=1]
+[ext_resource path="res://audio/click.ogg" type="AudioStream" id=2]
+[ext_resource path="res://audio/unclick.ogg" type="AudioStream" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6, 6 )
@@ -27,6 +29,18 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PressArea"]
 position = Vector2( 0, -6 )
 shape = SubResource( 1 )
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = 6.0
+pitch_scale = 1.35
+bus = "SFX"
+
+[node name="UnclickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -4.0
+pitch_scale = 0.82
+bus = "SFX"
 
 [connection signal="body_entered" from="PressArea" to="." method="_on_PressArea_body_entered"]
 [connection signal="body_exited" from="PressArea" to="." method="_on_PressArea_body_exited"]

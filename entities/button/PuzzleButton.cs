@@ -14,12 +14,17 @@ public class PuzzleButton : Node2D
     private float notPressedY;
     private float pressedY;
 
+    private AudioStreamPlayer clickSound;
+    private AudioStreamPlayer unclickSound;
+
     public override void _Ready()
     {
         targetNode = target == null ? null : GetNode<Operable>(target);
         innerButton = GetNode<Node2D>("Inner");
         notPressedY = innerButton.Position.y;
         pressedY = notPressedY * .5f;
+        clickSound = GetNode<AudioStreamPlayer>("ClickSound");
+        unclickSound = GetNode<AudioStreamPlayer>("UnclickSound");
     }
 
     public void _on_PressArea_body_entered(Node body)
@@ -28,6 +33,7 @@ public class PuzzleButton : Node2D
         {
             targetNode.Activate();
             innerButton.Position = new Vector2(innerButton.Position.x, pressedY);
+            clickSound.Play();
         }
     }
 
@@ -37,6 +43,7 @@ public class PuzzleButton : Node2D
         {
             targetNode.Deactivate();
             innerButton.Position = new Vector2(innerButton.Position.x, notPressedY);
+            unclickSound.Play();
         }
     }
 }
