@@ -49,11 +49,7 @@ Blacklight" is already taken.~~
         - [x] 💙💛 Clear level sound ([Source](https://www.zapsplat.com/music/game-sound-bright-and-warm-synth-complete-success-tone-1/))
         - [x] 💙💛 Lose level sound ([Source](https://www.zapsplat.com/music/game-sound-hit-thud-good-for-success-win-or-finish-level/))
         - [x] 💙💛 Vampire death sound ([Source](https://www.zapsplat.com/music/medium-fireball-close/))
-        - [ ] 💙💛 Button click sound
-        - [ ] 💙💛 Button un-click sound
-        - [ ] 💙💛 Vampire damage sound ([Source](https://www.zapsplat.com/music/fire-small-flame-close/))
-        - [ ] 💙💛 Menu item hover sound
-        - [ ] 💙💛 Menu item press sound
+        - [x] 💙💛 Vampire damage sound ([Source](https://www.zapsplat.com/music/fire-small-flame-close/))
 - [ ] 💟 Publish `0.1.2`
 - [ ] 💙 Settings for the graphics quality
 - [ ] 💙💜 Enemies that move around like goombas and are killed almost instantly by the blacklight
@@ -81,7 +77,10 @@ Blacklight" is already taken.~~
 - [ ] 💟 Publish `0.3.0`
 
 ### Expert features
-
+- [ ] 💙💛 Menu item hover sound
+- [ ] 💙💛 Menu item press sound
+- [ ] 💙💛 Button click sound
+- [ ] 💙💛 Button un-click sound
 - [ ] 💙💜💚 Boxes, which only the vampire can pick up and throw
 - [ ] 💙💜💚 Puzzles with water and floating boxes
 - [ ] 💚 Even more levels

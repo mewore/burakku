@@ -18,6 +18,10 @@ public class Vamp : Player
     private const float DAMAGE_PSEUDO_LIGHT_OPACITY_CHANGE = 1f;
     private const float DAMAGE_PSEUDO_LIGHT_OPACITY_WHEN_BURNING = 1f;
 
+    private const float MIN_DAMAGE_SOUND_DB = -30f;
+    private const float DAMAGE_SOUND_PER_HIT = .3f;
+    private const float DAMAGE_SOUND_CHANGE_RATE = .1f;
+
     private float hp = 1f;
 
     private List<(float, float)> pendingHits = new List<(float, float)>();
@@ -41,6 +45,10 @@ public class Vamp : Player
     private Light2D damageLight;
     public Light2D DamageLight { get => damageLight; }
 
+    private AudioStreamPlayer damageSound;
+    private float normalizedDamageSoundVolume = 0f;
+    private float maxDamageSoundDb;
+
     public override void _Ready()
     {
         base._Ready();
@@ -59,6 +67,8 @@ public class Vamp : Player
         damageLight = GetNode<Light2D>("DamageLight");
         GetNode<Light2D>("DeathLight").Visible = true;
         damagePseudoLight = GetNode<CanvasItem>("Center/DamagePseudoLight");
+        damageSound = GetNode<AudioStreamPlayer>("DamageSound");
+        maxDamageSoundDb = damageSound.VolumeDb;
     }
 
     public float CheckForDamage(float delta)
@@ -155,6 +165,18 @@ public class Vamp : Player
                 : new Color(damagePseudoLight.Modulate, pseudoLightOpacity + Mathf.Sign(targetOpacity - pseudoLightOpacity) * maxOpacityChange);
         }
         damagePseudoLight.Visible = damagePseudoLight.Modulate.a > .01f;
+
+        float targetDamageSoundVolume = Mathf.Min(1f, isBurning ? 0f : DAMAGE_SOUND_PER_HIT * firesToRender.Count);
+        float maxDamageSoundChange = DAMAGE_SOUND_CHANGE_RATE * delta;
+        float damageSoundVolumeDifference = Mathf.Abs(targetDamageSoundVolume - normalizedDamageSoundVolume);
+        normalizedDamageSoundVolume = opacityDifference <= damageSoundVolumeDifference
+            ? targetDamageSoundVolume
+            : normalizedDamageSoundVolume + Mathf.Sign(targetDamageSoundVolume - normalizedDamageSoundVolume) * maxDamageSoundChange;
+        damageSound.StreamPaused = normalizedDamageSoundVolume < .01f;
+        if (!damageSound.StreamPaused)
+        {
+            damageSound.VolumeDb = Mathf.Lerp(MIN_DAMAGE_SOUND_DB, maxDamageSoundDb, normalizedDamageSoundVolume);
+        }
     }
 
     public void RegisterHit(Vector2 hitPosition, float parallel)

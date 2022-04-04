@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/player/vamp/Vamp.cs" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://entities/player/vamp/vamp-outline.png" type="Texture" id=9]
 [ext_resource path="res://entities/player/vamp/fire-particle.png" type="Texture" id=10]
 [ext_resource path="res://audio/fireball.ogg" type="AudioStream" id=11]
+[ext_resource path="res://audio/burn.ogg" type="AudioStream" id=12]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -336,5 +337,12 @@ shadow_filter_smooth = 10.0
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="DamageSound" type="AudioStreamPlayer" parent="." index="16"]
+stream = ExtResource( 12 )
+volume_db = 10.0
+autoplay = true
+stream_paused = true
+bus = "SFX"
 
 [connection signal="Finished" from="StateMachine/Dying" to="." method="_on_Dying_Finished"]
