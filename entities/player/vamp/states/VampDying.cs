@@ -38,6 +38,7 @@ public class VampDying : VampState
     {
         vamp.ClearFire();
         vamp.RenderFire(delta, activelyBurning);
+        vamp.UpdateFireSound(delta, activelyBurning);
     }
 
     public void Finish()

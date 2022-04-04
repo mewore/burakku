@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/player/vamp/Vamp.cs" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://entities/player/vamp/fire-particle.png" type="Texture" id=10]
 [ext_resource path="res://audio/fireball.ogg" type="AudioStream" id=11]
 [ext_resource path="res://audio/burn.ogg" type="AudioStream" id=12]
+[ext_resource path="res://entities/player/vamp/states/VampInsideDoor.cs" type="Script" id=13]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -299,6 +300,9 @@ anims/stop_burning = SubResource( 7 )
 [node name="DeathSound" type="AudioStreamPlayer" parent="StateMachine/Dying" index="1"]
 stream = ExtResource( 11 )
 bus = "SFX"
+
+[node name="InsideDoor" parent="StateMachine" index="2"]
+script = ExtResource( 13 )
 
 [node name="TipLabel" parent="Tip" index="0"]
 text = "Move: [A] [D]

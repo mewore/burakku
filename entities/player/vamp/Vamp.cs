@@ -20,7 +20,7 @@ public class Vamp : Player
 
     private const float MIN_DAMAGE_SOUND_DB = -30f;
     private const float DAMAGE_SOUND_PER_HIT = .3f;
-    private const float DAMAGE_SOUND_CHANGE_RATE = .1f;
+    private const float DAMAGE_SOUND_CHANGE_RATE = 1.5f;
 
     private float hp = 1f;
 
@@ -165,11 +165,14 @@ public class Vamp : Player
                 : new Color(damagePseudoLight.Modulate, pseudoLightOpacity + Mathf.Sign(targetOpacity - pseudoLightOpacity) * maxOpacityChange);
         }
         damagePseudoLight.Visible = damagePseudoLight.Modulate.a > .01f;
+    }
 
+    public void UpdateFireSound(float delta, bool isBurning)
+    {
         float targetDamageSoundVolume = Mathf.Min(1f, isBurning ? 0f : DAMAGE_SOUND_PER_HIT * firesToRender.Count);
         float maxDamageSoundChange = DAMAGE_SOUND_CHANGE_RATE * delta;
         float damageSoundVolumeDifference = Mathf.Abs(targetDamageSoundVolume - normalizedDamageSoundVolume);
-        normalizedDamageSoundVolume = opacityDifference <= damageSoundVolumeDifference
+        normalizedDamageSoundVolume = damageSoundVolumeDifference <= maxDamageSoundChange
             ? targetDamageSoundVolume
             : normalizedDamageSoundVolume + Mathf.Sign(targetDamageSoundVolume - normalizedDamageSoundVolume) * maxDamageSoundChange;
         damageSound.StreamPaused = normalizedDamageSoundVolume < .01f;
