@@ -55,12 +55,12 @@ Blacklight" is already taken.~~
 - [x] 💙💛 Button click sound
 - [x] 💙💛 Button un-click sound
 - [x] 💚 Some proper levels
-- [ ] 💟 Publish `0.1.3`
+- [x] 💟 Publish `0.1.3`
 - [ ] 💜 A proper font
 - [ ] 💜 Environment art
 - [ ] 💜 Banner art
-- [ ] 💜 Icon
-- [ ] 💜 Logo
+- [x] 💜 Icon
+- [x] 💜 Cover art
 - [ ] 💜 Main menu art
 - [ ] 💟 Publish `0.2.0`
 
